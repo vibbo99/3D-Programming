@@ -9,6 +9,7 @@
 #include "Sphere.h"
 #include "SkyBoxCube.h"
 #include "SkyBoxSphere.h"
+#include "mousePicking.h"
 
 ID3D11Buffer* light_constant_buffer_ptr = NULL;
 ID3D11Buffer* lightNr_constant_buffer_ptr = NULL;
@@ -18,8 +19,16 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 {
 	Window window(hInstance, pCmdLine, nCmdShow);
 	Camera camera;
+
+
 	camera.setPosition(0, 0, 0);
 	camera.setupMouse(window.getHwind());
+
+	mousePicking* mousePicker;
+
+	mousePicker = new mousePicking(&camera);
+
+	mousePicker->getWorld();
 
 
 	/*Point_Light pl(XMFLOAT3(0.0f, 2.0f, 0.0f), window.getDevicePtr(), window.getDeviceContextPtr(), &camera);
@@ -112,7 +121,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	{
 
 		camera.processKeyboard(0.5);
-		camera.processMouse(0.5);
+		//camera.processMouse(0.5);
+
+		//Test mouse-picking
+
+
+
 
 		D3D11_BUFFER_DESC camDesc;
 		camDesc.ByteWidth = sizeof(XMFLOAT4);
@@ -137,6 +151,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 		window.clearDepthStencil();
 		window.getDeviceContextPtr()->RSSetViewports(1, window.getViewportPtr());
 		window.getDeviceContextPtr()->OMSetRenderTargets(1, window.getRenderTargetViewPtr(), window.getDepthStencilViewPtr());
+		
+
 		
 		//Draw cube object
 		cube.draw(light_constant_buffer_ptr, lightNr_constant_buffer_ptr, camera_pos_buffer);

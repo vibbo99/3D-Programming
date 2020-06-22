@@ -1,65 +1,8 @@
-﻿E:\3D Projekt\3D-Programming\3DProjekt\NormalMappingPixelShader.hlsl(42,19-28): warning X3081: comma expression used where a vector constructor may have been intended
-  compilation object save succeeded; see E:\3D Projekt\3D-Programming\Debug\NormalMappingPixelShader.cso
-E:\3D Projekt\3D-Programming\3DProjekt\NormalMappingPixelShader.hlsl(42,19-34): warning X3081: comma expression used where a vector constructor may have been intended
-E:\3D Projekt\3D-Programming\3DProjekt\NormalMappingPixelShader.hlsl(42,19-40): warning X3081: comma expression used where a vector constructor may have been intended
-E:\3D Projekt\3D-Programming\3DProjekt\NormalMappingPixelShader.hlsl(52,9-30): warning X3206: implicit truncation of vector type
-E:\3D Projekt\3D-Programming\3DProjekt\NormalMappingPixelShader.hlsl(65,21-54): warning X3206: 'cross': implicit truncation of vector type
-E:\3D Projekt\3D-Programming\3DProjekt\NormalMappingPixelShader.hlsl(65,21-54): warning X3206: 'cross': implicit truncation of vector type
-E:\3D Projekt\3D-Programming\3DProjekt\NormalMappingPixelShader.hlsl(67,26-49): warning X3206: 'mul': implicit truncation of vector type
-E:\3D Projekt\3D-Programming\3DProjekt\NormalMappingPixelShader.hlsl(69,9-61): warning X3206: implicit truncation of vector type
-E:\3D Projekt\3D-Programming\3DProjekt\NormalMappingPixelShader.hlsl(71,19-47): warning X3206: implicit truncation of vector type
-E:\3D Projekt\3D-Programming\3DProjekt\NormalMappingPixelShader.hlsl(79,9-57): warning X3206: implicit truncation of vector type
-E:\3D Projekt\3D-Programming\3DProjekt\NormalMappingPixelShader.hlsl(82,9-52): warning X3206: implicit truncation of vector type
-  
-  compilation object save succeeded; see E:\3D Projekt\3D-Programming\Debug\NormalMappingVertexShader.cso
-E:\3D Projekt\3D-Programming\3DProjekt\PixelShader.hlsl(50,19-28): warning X3081: comma expression used where a vector constructor may have been intended
-E:\3D Projekt\3D-Programming\3DProjekt\PixelShader.hlsl(50,19-34): warning X3081: comma expression used where a vector constructor may have been intended
-E:\3D Projekt\3D-Programming\3DProjekt\PixelShader.hlsl(50,19-40): warning X3081: comma expression used where a vector constructor may have been intended
-E:\3D Projekt\3D-Programming\3DProjekt\PixelShader.hlsl(64,9-30): warning X3206: implicit truncation of vector type
-E:\3D Projekt\3D-Programming\3DProjekt\PixelShader.hlsl(69,9-38): warning X3206: implicit truncation of vector type
-E:\3D Projekt\3D-Programming\3DProjekt\PixelShader.hlsl(70,9-61): warning X3206: implicit truncation of vector type
-E:\3D Projekt\3D-Programming\3DProjekt\PixelShader.hlsl(72,19-47): warning X3206: implicit truncation of vector type
-E:\3D Projekt\3D-Programming\3DProjekt\PixelShader.hlsl(80,9-57): warning X3206: implicit truncation of vector type
-E:\3D Projekt\3D-Programming\3DProjekt\PixelShader.hlsl(83,9-52): warning X3206: implicit truncation of vector type
-  
-  compilation object save succeeded; see E:\3D Projekt\3D-Programming\Debug\PixelShader.cso
-  compilation object save succeeded; see E:\3D Projekt\3D-Programming\Debug\VertexShader.cso
-  compilation object save succeeded; see E:\3D Projekt\3D-Programming\Debug\WhitePixelShader.cso
-  Camera.cpp
-E:\3D Projekt\3D-Programming\3DProjekt\Camera.cpp(38,66): warning C4305: 'argument': truncation from 'double' to 'float'
-E:\3D Projekt\3D-Programming\3DProjekt\Camera.cpp(42,67): warning C4305: 'argument': truncation from 'double' to 'float'
-E:\3D Projekt\3D-Programming\3DProjekt\Camera.cpp(46,43): warning C4305: 'argument': truncation from 'double' to 'float'
-  Cube.cpp
-E:\3D Projekt\3D-Programming\3DProjekt\Camera.cpp(50,42): warning C4305: 'argument': truncation from 'double' to 'float'
-E:\3D Projekt\3D-Programming\3DProjekt\Cube.cpp(27,82): warning C4316: 'Shader': object allocated on the heap may not be aligned 16
-  main.cpp
-E:\3D Projekt\3D-Programming\3DProjekt\Cube.cpp(51,20): warning C4018: '<': signed/unsigned mismatch
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(38,118): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(40,120): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(43,121): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(46,119): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-  objLoader.cpp
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(48,48): warning C4305: 'argument': truncation from 'double' to 'float'
-E:\3D Projekt\3D-Programming\3DProjekt\objLoader.cpp(76,20): warning C4018: '<': signed/unsigned mismatch
-E:\3D Projekt\3D-Programming\3DProjekt\objLoader.cpp(83,20): warning C4018: '<': signed/unsigned mismatch
-  Plane.cpp
-E:\3D Projekt\3D-Programming\3DProjekt\objLoader.cpp(90,20): warning C4018: '<': signed/unsigned mismatch
-  Point_Light.cpp
-E:\3D Projekt\3D-Programming\3DProjekt\Plane.cpp(169,114): warning C4316: 'Shader': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\Point_Light.cpp(41,107): warning C4316: 'Sphere': object allocated on the heap may not be aligned 16
-  Shader.cpp
-  SkyBoxCube.cpp
-E:\3D Projekt\3D-Programming\3DProjekt\Point_Light.cpp(60,107): warning C4316: 'Sphere': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\SkyBoxCube.cpp(27,82): warning C4316: 'Shader': object allocated on the heap may not be aligned 16
-  SkyBoxSphere.cpp
-E:\3D Projekt\3D-Programming\3DProjekt\SkyBoxCube.cpp(51,20): warning C4018: '<': signed/unsigned mismatch
-  Sphere.cpp
-E:\3D Projekt\3D-Programming\3DProjekt\SkyBoxSphere.cpp(14,72): warning C4316: 'Shader': object allocated on the heap may not be aligned 16
-  Window.cpp
-E:\3D Projekt\3D-Programming\3DProjekt\Sphere.cpp(13,72): warning C4316: 'Shader': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\Header.h(31,21): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
-E:\3D Projekt\3D-Programming\3DProjekt\Header.h(30,22): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
-E:\3D Projekt\3D-Programming\3DProjekt\Window.cpp(136,3): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
-  Generating Code...
-E:\3D Projekt\3D-Programming\3DProjekt\Window.cpp(135,3): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
+﻿  main.cpp
+E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(29,41): warning C4316: 'mousePicking': object allocated on the heap may not be aligned 16
+E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(47,118): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
+E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(49,120): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
+E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(52,121): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
+E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(55,119): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
+E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(57,48): warning C4305: 'argument': truncation from 'double' to 'float'
   3DProjekt.vcxproj -> E:\3D Projekt\3D-Programming\Debug\3DProjekt.exe

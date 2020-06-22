@@ -27,12 +27,12 @@ private:
 
 	void _updateViewMatrix();
 	std::unique_ptr<DirectX::Keyboard> keyboard = std::make_unique<DirectX::Keyboard>();
-	std::unique_ptr<DirectX::Mouse> mouse = std::make_unique<DirectX::Mouse>();
+	//std::unique_ptr<DirectX::Mouse> mouse = std::make_unique<DirectX::Mouse>();
 public:
 	Camera();
 	void setProjectionValues(float fovDegrees, float aspectRation, float nearZ, float farZ);
 	void processKeyboard(float deltaTime);
-	void processMouse(float deltaTime);
+	//void processMouse(float deltaTime);
 	void setupMouse(HWND hwnd);
 
 	//Getters

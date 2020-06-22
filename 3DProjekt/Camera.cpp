@@ -68,59 +68,59 @@ void Camera::processKeyboard(float deltaTime)
 
 }
 
-void Camera::processMouse(float deltaTime)
-{
-	float speed = 2.5f;
-	auto theMouse = mouse->GetState();
-	
-	
-
-	speed *= deltaTime;
-	//mouse->SetVisible(true);
-	
-	this-> mouseX = theMouse.x;
-	this-> mouseY = theMouse.y;
-
-	this->differenceX = this->mouseX - this->tempValueX;
-	this->differenceY = this->mouseY - this->tempValueY;
-
-
-
-	//if (mouseX > tempValueX)
-	//{
-	//	this->adjustRotation(0.0f, 0.005 * differenceX, 0.0f);
-	//}
-
-	//else if (mouseX < tempValueX)
-	//{
-	//	this->adjustRotation(0.0f, -0.005 * differenceX, 0.0f);
-	//}
-
-	//if (mouseY > tempValueY)
-	//{
-	//	this->adjustRotation(0.005 * differenceY, 0.0f, 0.0f);
-	//}
-	//else if (mouseY < tempValueY)
-	//{
-	//	this->adjustRotation(-0.005 * differenceY, 0.0f, 0.0f);
-	//}
-	
-
-
-	
-	tempValueX = this-> mouseX;
-	tempValueY = this-> mouseY;
-
-	
-	//theMouse.y = 0;
-	
-	
-	
-}
+//void Camera::processMouse(float deltaTime)
+//{
+//	float speed = 2.5f;
+//	auto theMouse = mouse->GetState();
+//	
+//	
+//
+//	speed *= deltaTime;
+//	//mouse->SetVisible(true);
+//	
+//	this-> mouseX = theMouse.x;
+//	this-> mouseY = theMouse.y;
+//
+//	this->differenceX = this->mouseX - this->tempValueX;
+//	this->differenceY = this->mouseY - this->tempValueY;
+//
+//
+//
+//	//if (mouseX > tempValueX)
+//	//{
+//	//	this->adjustRotation(0.0f, 0.005 * differenceX, 0.0f);
+//	//}
+//
+//	//else if (mouseX < tempValueX)
+//	//{
+//	//	this->adjustRotation(0.0f, -0.005 * differenceX, 0.0f);
+//	//}
+//
+//	//if (mouseY > tempValueY)
+//	//{
+//	//	this->adjustRotation(0.005 * differenceY, 0.0f, 0.0f);
+//	//}
+//	//else if (mouseY < tempValueY)
+//	//{
+//	//	this->adjustRotation(-0.005 * differenceY, 0.0f, 0.0f);
+//	//}
+//	
+//
+//
+//	
+//	tempValueX = this-> mouseX;
+//	tempValueY = this-> mouseY;
+//
+//	
+//	//theMouse.y = 0;
+//	
+//	
+//	
+//}
 
 void Camera::setupMouse(HWND hwnd)
 {
-	mouse->SetWindow(hwnd);
+	//mouse->SetWindow(hwnd);
 	//mouse->SetMode(Mouse::MODE_RELATIVE);
 
 }
