@@ -43,6 +43,7 @@ public:
 	const XMFLOAT3& getPositionFloat3() const;
 	const XMVECTOR& getRotationVector() const;
 	const XMFLOAT3& getRotationFloat3() const;
+	const XMFLOAT3& getCamTarget() const;
 
 	//Setters
 	void setPosition(const XMVECTOR& pos);

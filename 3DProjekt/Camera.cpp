@@ -155,6 +155,17 @@ const XMFLOAT3& Camera::getRotationFloat3() const
 	return this->rotation;
 }
 
+const XMFLOAT3& Camera::getCamTarget() const
+{
+	XMFLOAT3 returnValue;
+	returnValue.x = XMVectorGetX(camTarget);
+	returnValue.y = XMVectorGetY(camTarget);
+	returnValue.z = XMVectorGetZ(camTarget);
+
+	return returnValue;
+}
+
+
 void Camera::setPosition(const XMVECTOR& pos)
 {
 	XMStoreFloat3(&this->position, pos);
