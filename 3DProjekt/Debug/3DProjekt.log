@@ -1,65 +1,15 @@
-﻿C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\NormalMappingPixelShader.hlsl(42,19-28): warning X3081: comma expression used where a vector constructor may have been intended
-  compilation object save succeeded; see C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\Debug\NormalMappingPixelShader.cso
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\NormalMappingPixelShader.hlsl(42,19-34): warning X3081: comma expression used where a vector constructor may have been intended
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\NormalMappingPixelShader.hlsl(42,19-40): warning X3081: comma expression used where a vector constructor may have been intended
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\NormalMappingPixelShader.hlsl(52,9-30): warning X3206: implicit truncation of vector type
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\NormalMappingPixelShader.hlsl(65,21-54): warning X3206: 'cross': implicit truncation of vector type
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\NormalMappingPixelShader.hlsl(65,21-54): warning X3206: 'cross': implicit truncation of vector type
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\NormalMappingPixelShader.hlsl(67,26-49): warning X3206: 'mul': implicit truncation of vector type
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\NormalMappingPixelShader.hlsl(69,9-61): warning X3206: implicit truncation of vector type
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\NormalMappingPixelShader.hlsl(71,19-47): warning X3206: implicit truncation of vector type
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\NormalMappingPixelShader.hlsl(79,9-57): warning X3206: implicit truncation of vector type
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\NormalMappingPixelShader.hlsl(82,9-52): warning X3206: implicit truncation of vector type
+﻿C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(42,22-31): warning X3081: comma expression used where a vector constructor may have been intended
+C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(42,22-37): warning X3081: comma expression used where a vector constructor may have been intended
+C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(42,22-43): warning X3081: comma expression used where a vector constructor may have been intended
+C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(52,12-33): warning X3206: implicit truncation of vector type
+C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(56,24-27): warning X3081: comma expression used where a vector constructor may have been intended
+C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(73,24-57): warning X3206: 'cross': implicit truncation of vector type
+C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(73,24-57): warning X3206: 'cross': implicit truncation of vector type
+C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(75,29-52): warning X3206: 'mul': implicit truncation of vector type
+C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(77,12-64): warning X3206: implicit truncation of vector type
+C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(79,22-50): warning X3206: implicit truncation of vector type
+C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(87,12-60): warning X3206: implicit truncation of vector type
+C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(90,12-55): warning X3206: implicit truncation of vector type
   
-  compilation object save succeeded; see C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\Debug\NormalMappingVertexShader.cso
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\PixelShader.hlsl(50,19-28): warning X3081: comma expression used where a vector constructor may have been intended
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\PixelShader.hlsl(50,19-34): warning X3081: comma expression used where a vector constructor may have been intended
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\PixelShader.hlsl(50,19-40): warning X3081: comma expression used where a vector constructor may have been intended
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\PixelShader.hlsl(64,9-30): warning X3206: implicit truncation of vector type
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\PixelShader.hlsl(69,9-38): warning X3206: implicit truncation of vector type
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\PixelShader.hlsl(70,9-61): warning X3206: implicit truncation of vector type
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\PixelShader.hlsl(72,19-47): warning X3206: implicit truncation of vector type
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\PixelShader.hlsl(80,9-57): warning X3206: implicit truncation of vector type
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\PixelShader.hlsl(83,9-52): warning X3206: implicit truncation of vector type
-  
-  compilation object save succeeded; see C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\Debug\PixelShader.cso
-  compilation object save succeeded; see C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\Debug\VertexShader.cso
-  compilation object save succeeded; see C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\Debug\WhitePixelShader.cso
-  Camera.cpp
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\Camera.cpp(38,66): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\Camera.cpp(42,67): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\Camera.cpp(46,43): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\Camera.cpp(50,42): warning C4305: 'argument': truncation from 'double' to 'float'
-  Cube.cpp
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\Cube.cpp(27,82): warning C4316: 'Shader': object allocated on the heap may not be aligned 16
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\Cube.cpp(51,20): warning C4018: '<': signed/unsigned mismatch
-  main.cpp
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\main.cpp(38,118): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\main.cpp(40,120): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\main.cpp(43,121): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\main.cpp(46,119): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\main.cpp(48,48): warning C4305: 'argument': truncation from 'double' to 'float'
-  objLoader.cpp
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\objLoader.cpp(76,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\objLoader.cpp(83,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\objLoader.cpp(90,20): warning C4018: '<': signed/unsigned mismatch
-  Plane.cpp
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\Plane.cpp(169,114): warning C4316: 'Shader': object allocated on the heap may not be aligned 16
-  Point_Light.cpp
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\Point_Light.cpp(41,107): warning C4316: 'Sphere': object allocated on the heap may not be aligned 16
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\Point_Light.cpp(60,107): warning C4316: 'Sphere': object allocated on the heap may not be aligned 16
-  Shader.cpp
-  SkyBoxCube.cpp
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\SkyBoxCube.cpp(27,82): warning C4316: 'Shader': object allocated on the heap may not be aligned 16
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\SkyBoxCube.cpp(51,20): warning C4018: '<': signed/unsigned mismatch
-  SkyBoxSphere.cpp
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\SkyBoxSphere.cpp(14,72): warning C4316: 'Shader': object allocated on the heap may not be aligned 16
-  Sphere.cpp
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\Sphere.cpp(13,72): warning C4316: 'Shader': object allocated on the heap may not be aligned 16
-  Window.cpp
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\Header.h(31,21): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\Header.h(30,22): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\Window.cpp(136,3): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
-C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\3DProjekt\Window.cpp(135,3): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
-  Generating Code...
-  3DProjekt.vcxproj -> C:\Users\vibbo\OneDrive - BTH Student\Documents\Visual Studio 2017\3DProjekt\3DProjekt\Debug\3DProjekt.exe
+  compilation object save succeeded; see C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\Debug\WaterPixelShader.cso
+  3DProjekt.vcxproj -> C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\Debug\3DProjekt.exe

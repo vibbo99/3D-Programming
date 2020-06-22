@@ -38,7 +38,7 @@ private:
 	void setMaterialBuffer();
 public:
 	Plane(float x, float y, float z, LPCWSTR texturePath, LPCWSTR normalPath, Camera* camera,
-		ID3D11Device* device_ptr, ID3D11DeviceContext* device_context_ptr);
+		ID3D11Device* device_ptr, ID3D11DeviceContext* device_context_ptr, bool movingNormal = false);
 
 	void setPosition(float x, float y, float z);
 	void scaleSize(float x, float y, float z);

@@ -163,12 +163,15 @@ void Plane::setMaterialBuffer()
 }
 
 
-Plane::Plane(float x, float y, float z, LPCWSTR texturePath, LPCWSTR normalPath, Camera* camera, ID3D11Device* device_ptr, ID3D11DeviceContext* device_context_ptr)
+Plane::Plane(float x, float y, float z, LPCWSTR texturePath, LPCWSTR normalPath, Camera* camera, ID3D11Device* device_ptr, ID3D11DeviceContext* device_context_ptr, bool movingNormal)
 {
 	//this->shader = new Shader(L"NormalMappingVertexShader.hlsl", L"NormalMappingPixelShader.hlsl", device_ptr, true);
-	this->shader = new Shader(L"NormalMappingVertexShader.hlsl", L"NormalMappingPixelShader.hlsl", device_ptr, true);
+	if(movingNormal)
+		this->shader = new Shader(L"WaterVertexShader.hlsl", L"WaterPixelShader.hlsl", device_ptr, true);
+	else
+		this->shader = new Shader(L"NormalMappingVertexShader.hlsl", L"NormalMappingPixelShader.hlsl", device_ptr, true);
+	
 	this->setPosition(x, y, z);
-
 	this->camera = camera;
 	this->device_ptr = device_ptr;
 	this->device_context_ptr = device_context_ptr;

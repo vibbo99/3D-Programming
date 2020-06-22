@@ -29,6 +29,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	//SkyBoxCube skyBoxCube(0.0f, 0.0f , 0.0f, LPCWSTR(L"Skybox_test.jpg"), &camera, window.getDevicePtr(), window.getDeviceContextPtr());
 	
 	Plane planeObject(0.0f, -2.0f, 0.0f, L"texture2.png", L"texture2_normal.png", &camera, window.getDevicePtr(), window.getDeviceContextPtr());
+
+	Plane waterPlane(3.0f, -6.0f, 3.0f, L"blue_texture.png", L"water_normal_debug.png", &camera, window.getDevicePtr(), window.getDeviceContextPtr(), true);
 	
 	Sphere sphereObject(-4.0f, 0.0f, 4.0f, LPCWSTR(L"groundTexture.jpg"), &camera, window.getDevicePtr(), window.getDeviceContextPtr());
 
@@ -147,6 +149,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 		//planeObject.setPosition(0, 0, 0);
 		//planeObject.rotateZ(-0.5);
 		planeObject.draw(light_constant_buffer_ptr, lightNr_constant_buffer_ptr, camera_pos_buffer);
+
+		waterPlane.draw(light_constant_buffer_ptr, lightNr_constant_buffer_ptr, camera_pos_buffer);
+
 
 		//Draw sphere
 		sphereObject.draw(light_constant_buffer_ptr, lightNr_constant_buffer_ptr, camera_pos_buffer);

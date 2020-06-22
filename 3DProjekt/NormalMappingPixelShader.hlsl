@@ -58,7 +58,8 @@ float4 calcPointLight(Point_Light pl, ps_in input)
 	//float4 norm = normalTexture.Sample(samplerState, input.texcoord);
 	//norm = normalize(norm * 2.0 - 1.0);
 	//norm = normalize(mul(input.TBN, norm));
-	float4 normalMap = normalTexture.Sample(samplerState, input.texcoord);
+
+    float4 normalMap = normalTexture.Sample(samplerState, input.texcoord);
 	normalMap = (2.0f * normalMap) - 1.0f;
 	input.tangent = normalize(input.tangent -  dot(input.tangent, input.normal) * input.normal);
 
