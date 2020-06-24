@@ -53,6 +53,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 
 	Plane planeObjects[50];
 
+	int planeDelay = 800;
+
 	//Sphere intersection variables
 	int nrOfSpheres = 0;
 	XMVECTOR sphereCenter[50];
@@ -78,13 +80,15 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	
 
 	//SkyBoxCube skyBoxCube(0.0f, 0.0f , 0.0f, LPCWSTR(L"Skybox_test.jpg"), &camera, window.getDevicePtr(), window.getDeviceContextPtr());
-	planeObjects[0] = Plane(0.0f, -2.0f, -2.0f, L"texture2.png", L"texture2_normal.png", &camera, window.getDevicePtr(), window.getDeviceContextPtr());
+	planeObjects[0] = Plane(20.0f, -2.0f, 2.0f, L"texture2.png", L"texture2_normal.png", &camera, window.getDevicePtr(), window.getDeviceContextPtr());
 	nrOfPlanes++;
+
+	planeObjects[0].setPosition(20.0f, -2.f, 2.f);
 
 	planeNormals[nrOfPlanes - 1] = planeObjects[0].getNormalInfo();
 	planePositions[nrOfPlanes - 1] = planeObjects[0].getPositionXMVECTOR();
 
-	planeObjects[0].rotateX(XMConvertToRadians(-90));
+	//planeObjects[0].rotateX(XMConvertToRadians(-90));
 	
 	Sphere sphereObject(-4.0f, 0.0f, 4.0f, LPCWSTR(L"groundTexture.jpg"), &camera, window.getDevicePtr(), window.getDeviceContextPtr());
 
@@ -200,11 +204,15 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 		for (int i = 0; i < nrOfPlanes; i++)
 		{
 			lowestValue = intersectionCheck.collisionCheck(i, mousePicker->getRayPos(), planeDistance, mousePicker->getRayDir(), planeNormals, "Plane", sphereCenter, sphereRadius);
-			std::cout << std::to_string(-1) << std::endl;
+			
 			if (lowestValue >= 0)
 			{
 				std::cout << "Ray hit plane" << std::endl;
-				planeObjects[i].setPosition(-100.f, 0.f, 0.f);
+				planeDelay--;
+				if(planeDelay <= 0)
+				{ 
+					planeObjects[i].setPosition(-50.f, 0.f, 2.f);
+				}
 			}
 		}
 		

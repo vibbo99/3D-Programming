@@ -321,5 +321,5 @@ XMVECTOR Plane::getPositionXMVECTOR()
 
 XMVECTOR Plane::getNormalInfo()
 {
-	return XMVectorSet(vertex_data_array[0].nX, vertex_data_array[0].nY, vertex_data_array[0].nZ, 1.0f);
+	return XMVectorSet(normals[0].x, normals[0].y, normals[0].z, 1.0f);
 }

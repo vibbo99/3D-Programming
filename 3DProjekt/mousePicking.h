@@ -13,6 +13,7 @@ private:
 	int mouseX;
 	int mouseY;
 
+
 	XMMATRIX proj;
 	XMMATRIX view;
 

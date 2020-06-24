@@ -1,9 +1,3 @@
-﻿  main.cpp
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(70,41): warning C4316: 'mousePicking': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(99,118): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(101,120): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(104,121): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(107,119): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(109,48): warning C4305: 'argument': truncation from 'double' to 'float'
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(44,11): warning C4101: 'worldMousePos': unreferenced local variable
+﻿  Plane.cpp
+E:\3D Projekt\3D-Programming\3DProjekt\Plane.cpp(173,114): warning C4316: 'Shader': object allocated on the heap may not be aligned 16
   3DProjekt.vcxproj -> E:\3D Projekt\3D-Programming\Debug\3DProjekt.exe

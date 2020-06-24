@@ -24,8 +24,15 @@ void mousePicking::processMouse()
 		this->mouseX = theMouse.x;
 		this->mouseY = theMouse.y;
 
+		auto leftClickCheck = mouse->GetState().leftButton;
+		
+		//if (leftClickCheck == )
+		//{
+		//	
+		//}
 
 		mouseToCoords(mouseX, mouseY);
+
 		//mouseNormalized = normalizeMouse(this->mouseX, this->mouseY);
 
 		////convert to clip coords
@@ -44,6 +51,7 @@ void mousePicking::processMouse()
 void mousePicking::update(Camera* aCamera)
 {
 	this->view = this->aCamera->getViewMatrix();
+	
 	processMouse();
 }
 
@@ -58,7 +66,7 @@ void mousePicking::mouseToCoords(float x, float y)
 
 	viewSpace.m128_f32[0] = (x * 2.f) / WIDTH - 1 / projX;
 	viewSpace.m128_f32[1] = -(y * 2.f) / HEIGHT + 1 / projY;
-	viewSpace.m128_f32[2] = -1.f;
+	viewSpace.m128_f32[2] = 1.f;
 
 	XMVECTOR pos = XMVectorSet(0.f, 0.f, 0.f, 1.f);
 	XMVECTOR dir = XMVectorSet(viewSpace.m128_f32[0], viewSpace.m128_f32[1], viewSpace.m128_f32[2], 1.0f);
