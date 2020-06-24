@@ -28,11 +28,14 @@ private:
 public:
 	Sphere(float x, float y, float z, LPCWSTR texturePath, Camera* camera,
 		ID3D11Device* device_ptr, ID3D11DeviceContext* device_context_ptr);
-
+	Sphere();
 	//Setters
 	void setPosition(float x, float y, float z);
 	void scaleSize(float x, float y, float z);
 	Shader* getShader() { return this->shader; }
+
+	//Getters
+	XMVECTOR getCENTERXMVECTOR();
 
 	void draw(ID3D11Buffer* light_constant_buffer = NULL, ID3D11Buffer* lightNr_constant_buffer = NULL,
 		ID3D11Buffer* cam_pos_buffer = NULL);

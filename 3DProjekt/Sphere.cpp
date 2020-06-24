@@ -72,6 +72,10 @@ Sphere::Sphere(float x, float y, float z, LPCWSTR texturePath, Camera* camera, I
 	assert(SUCCEEDED(hrCreateVBuffer));
 }
 
+Sphere::Sphere()
+{
+}
+
 void Sphere::setPosition(float x, float y, float z)
 {
 	this->position = XMFLOAT3(x, y, z);
@@ -84,6 +88,11 @@ void Sphere::scaleSize(float x, float y, float z)
 {
 	shader->setModelMatrix(XMMatrixScaling(x, y, z) * XMMatrixTranslationFromVector(this->posVec));
 
+}
+
+XMVECTOR Sphere::getCENTERXMVECTOR()
+{
+	return posVec;
 }
 
 void Sphere::draw(ID3D11Buffer* light_constant_buffer, ID3D11Buffer* lightNr_constant_buffer,

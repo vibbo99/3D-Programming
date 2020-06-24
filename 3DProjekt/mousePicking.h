@@ -46,7 +46,7 @@ public:
 	void mouseToCoords(float x, float y);
 
 
-	XMVECTOR getWorldInverse();
+	XMVECTOR getRayDir();
 	XMVECTOR getRayPos();
 
 	//XMFLOAT4 toEye(XMFLOAT4 aClip);

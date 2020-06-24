@@ -77,7 +77,7 @@ void mousePicking::mouseToCoords(float x, float y)
 	this->world = dir;
 }
 
-XMVECTOR mousePicking::getWorldInverse()
+XMVECTOR mousePicking::getRayDir()
 {
 	return this->world;
 }

@@ -53,6 +53,13 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 
 	Plane planeObjects[50];
 
+	//Sphere intersection variables
+	int nrOfSpheres = 0;
+	XMVECTOR sphereCenter[50];
+	float sphereRadius[50];
+
+	Sphere sphereObjects[50];
+
 	RedirectIOToConsole();
 
 	camera.setPosition(0, 0, 0);
@@ -71,16 +78,20 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	
 
 	//SkyBoxCube skyBoxCube(0.0f, 0.0f , 0.0f, LPCWSTR(L"Skybox_test.jpg"), &camera, window.getDevicePtr(), window.getDeviceContextPtr());
-	planeObjects[0] = Plane(0.0f, -2.0f, 0.0f, L"texture2.png", L"texture2_normal.png", &camera, window.getDevicePtr(), window.getDeviceContextPtr());
-	
-	//Plane planeObject(0.0f, -2.0f, 0.0f, L"texture2.png", L"texture2_normal.png", &camera, window.getDevicePtr(), window.getDeviceContextPtr());
+	planeObjects[0] = Plane(0.0f, -2.0f, -2.0f, L"texture2.png", L"texture2_normal.png", &camera, window.getDevicePtr(), window.getDeviceContextPtr());
 	nrOfPlanes++;
-	
+
 	planeNormals[nrOfPlanes - 1] = planeObjects[0].getNormalInfo();
 	planePositions[nrOfPlanes - 1] = planeObjects[0].getPositionXMVECTOR();
 
-
+	planeObjects[0].rotateX(XMConvertToRadians(-90));
+	
 	Sphere sphereObject(-4.0f, 0.0f, 4.0f, LPCWSTR(L"groundTexture.jpg"), &camera, window.getDevicePtr(), window.getDeviceContextPtr());
+
+	//sphereObjects[0] = Sphere(-4.0f, 0.0f, 4.0f, LPCWSTR(L"groundTexture.jpg"), &camera, window.getDevicePtr(), window.getDeviceContextPtr());
+	//nrOfSpheres++;
+
+	//sphereCenter = sphereObjects[0].
 
 	SkyBoxSphere SkySphere(0.0f, 0.0f, 0.0f, LPCWSTR(L"skymap.dds"), &camera, window.getDevicePtr(), window.getDeviceContextPtr());
 
@@ -185,20 +196,20 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 
 		mousePicker->update(&camera);
 
-		//check mouse pos in world coords
-		worldMousePos = mousePicker->getWorldInverse();
 
 		for (int i = 0; i < nrOfPlanes; i++)
 		{
-			lowestValue = intersectionCheck.collisionCheck(i, nrOfPlanes, mousePicker->getRayPos(), planeDistance, mousePicker->getWorldInverse(), planePositions, planeNormals, "Plane");
+			lowestValue = intersectionCheck.collisionCheck(i, mousePicker->getRayPos(), planeDistance, mousePicker->getRayDir(), planeNormals, "Plane", sphereCenter, sphereRadius);
+			std::cout << std::to_string(-1) << std::endl;
 			if (lowestValue >= 0)
 			{
+				std::cout << "Ray hit plane" << std::endl;
 				planeObjects[i].setPosition(-100.f, 0.f, 0.f);
 			}
 		}
 		
 
-		std::cout << std::to_string(worldMousePos.m128_f32[0]) << ", " << std::to_string(worldMousePos.m128_f32[1]) << ", " << std::to_string(worldMousePos.m128_f32[2]) << std::endl;
+		//std::cout << std::to_string(worldMousePos.m128_f32[0]) << ", " << std::to_string(worldMousePos.m128_f32[1]) << ", " << std::to_string(worldMousePos.m128_f32[2]) << std::endl;
 
 		HRESULT hr = window.getDevicePtr()->CreateBuffer(&camDesc, &camData, &camera_pos_buffer);
 

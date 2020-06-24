@@ -12,14 +12,13 @@ float intersectionChecker::dotCalc(XMVECTOR v1, XMVECTOR v2)
 }
 
 
-float intersectionChecker::collisionCheck(int index, int nrOfShapes, XMVECTOR rayPosition, float& distance, XMVECTOR rayDirection, XMVECTOR positions[], XMVECTOR normals[], std::string shape)
+float intersectionChecker::collisionCheck(int index, XMVECTOR rayPosition, float& distance, XMVECTOR rayDirection, XMVECTOR normals[], std::string shape, XMVECTOR center[], float radius[])
 {
 	
 	if (shape == "Plane" || shape == "plane")
-	{
-			
+	{			
 		//dp är distance i z
-		float theDistance = -100.0f;
+		float theDistance = -1.f;
 		float dotCalculation = dotCalc(normals[index], rayPosition);
 
 		float firstPartOfEquation = -theDistance - dotCalculation;
@@ -43,13 +42,30 @@ float intersectionChecker::collisionCheck(int index, int nrOfShapes, XMVECTOR ra
 
 	else if (shape == "Sphere" || shape == "sphere")
 	{
-			
+		float t = -1;
+		XMVECTOR sphereOrigin = rayPosition - center[index];
+		float b = dotCalc(rayDirection, sphereOrigin);
+		float c = dotCalc(sphereOrigin, sphereOrigin) - pow(radius[index], 2);
+		
+			if (pow(b, 2) - c > 0)
+		{
+			float t1 = -b + sqrt(pow(b, 2) - c);
+			float t2 = -b - sqrt(pow(b, 2) - c);
+			t = t1;
+			if (t > t2)
+			{
+				t = t2;
+			}
+		}
+
+		distance = t;
+
+		return t;
+
 	}
 
 	else if (shape == "Cube" || shape == "cube")
 	{
-			
-		
+		return 0;		
 	}
-	return 0;
 }
