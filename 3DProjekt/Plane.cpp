@@ -163,6 +163,10 @@ void Plane::setMaterialBuffer()
 }
 
 
+Plane::Plane()
+{
+}
+
 Plane::Plane(float x, float y, float z, LPCWSTR texturePath, LPCWSTR normalPath, Camera* camera, ID3D11Device* device_ptr, ID3D11DeviceContext* device_context_ptr)
 {
 	//this->shader = new Shader(L"NormalMappingVertexShader.hlsl", L"NormalMappingPixelShader.hlsl", device_ptr, true);
@@ -193,7 +197,7 @@ Plane::Plane(float x, float y, float z, LPCWSTR texturePath, LPCWSTR normalPath,
 
 	
 	setMaterialBuffer();
-	VertexDataNormalMap vertex_data_array[6];
+	
 	for (int i = 0; i < 6; i++)
 	{
 		//Copy vertices
@@ -244,6 +248,22 @@ void Plane::setPosition(float x, float y, float z)
 		this->position.x, this->position.y, this->position.z));
 }
 
+
+void Plane::rotateX(float x)
+{
+	shader->setModelMatrix(XMMatrixRotationX(x));
+}
+
+void Plane::rotateY(float x)
+{
+	shader->setModelMatrix(XMMatrixRotationY(x));
+}
+
+void Plane::rotateZ(float x)
+{
+	shader->setModelMatrix(XMMatrixRotationZ(x));
+}
+
 void Plane::scaleSize(float x, float y, float z)
 {
 	shader->setModelMatrix(XMMatrixScaling(x, y, z) * XMMatrixTranslationFromVector(this->posVec));
@@ -251,13 +271,9 @@ void Plane::scaleSize(float x, float y, float z)
 	//XMMATRIX XMworld = XMMatrixInverse(&XMMatrixDeterminant(world), world);
 	//XMworld = XMMatrixTranspose(XMworld);
 	//shader->setModelMatrix(XMworld);
-
 }
 
-void Plane::rotateZ(float x)
-{
-	shader->setModelMatrix(XMMatrixRotationZ(x));
-}
+
 
 void Plane::draw(ID3D11Buffer* light_constant_buffer, ID3D11Buffer* lightNr_constant_buffer,
 	ID3D11Buffer* cam_pos_buffer)
@@ -291,4 +307,19 @@ void Plane::draw(ID3D11Buffer* light_constant_buffer, ID3D11Buffer* lightNr_cons
 	//5. Output Merger
 
 	device_context_ptr->Draw(vertex_count, 0);
+}
+
+XMFLOAT3 Plane::getPositionXMFLOAT3()
+{
+	return this->position;
+}
+
+XMVECTOR Plane::getPositionXMVECTOR()
+{
+	return this->posVec;
+}
+
+XMVECTOR Plane::getNormalInfo()
+{
+	return XMVectorSet(vertex_data_array[0].nX, vertex_data_array[0].nY, vertex_data_array[0].nZ, 1.0f);
 }

@@ -51,6 +51,9 @@
     <ClInclude Include="mousePicking.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="intersectionChecker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -87,6 +90,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mousePicking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="intersectionChecker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

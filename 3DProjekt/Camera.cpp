@@ -23,6 +23,7 @@ Camera::Camera()
 void Camera::setProjectionValues(float fovDegrees, float aspectRation, float nearZ, float farZ)
 {
 	float fovRadians = (fovDegrees / 260.0f) * XM_2PI;
+	//fieldOfView = (fovDegrees / 260.0f) * XM_2PI;;
 	this->projectionMatrix = XMMatrixPerspectiveFovLH(fovRadians, aspectRation, nearZ, farZ);
 }
 
@@ -163,6 +164,11 @@ const XMFLOAT3& Camera::getCamTarget() const
 	returnValue.z = XMVectorGetZ(camTarget);
 
 	return returnValue;
+}
+
+const float& Camera::getFieldOfView() const
+{
+	return this->fieldOfView;
 }
 
 

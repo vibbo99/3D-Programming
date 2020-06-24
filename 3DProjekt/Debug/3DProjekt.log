@@ -1,8 +1,8 @@
 ﻿  main.cpp
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(29,41): warning C4316: 'mousePicking': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(47,118): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(49,120): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(52,121): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(55,119): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(57,48): warning C4305: 'argument': truncation from 'double' to 'float'
+E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(63,41): warning C4316: 'mousePicking': object allocated on the heap may not be aligned 16
+E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(88,118): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
+E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(90,120): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
+E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(93,121): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
+E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(96,119): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
+E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(98,48): warning C4305: 'argument': truncation from 'double' to 'float'
   3DProjekt.vcxproj -> E:\3D Projekt\3D-Programming\Debug\3DProjekt.exe

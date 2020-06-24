@@ -22,6 +22,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Header.h" />
+    <ClInclude Include="intersectionChecker.h" />
     <ClInclude Include="mousePicking.h" />
     <ClInclude Include="SkyboxCube.h" />
     <ClInclude Include="objLoader.h" />
@@ -35,6 +36,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="intersectionChecker.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mousePicking.cpp" />
     <ClCompile Include="objLoader.cpp" />

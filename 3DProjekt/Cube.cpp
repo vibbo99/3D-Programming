@@ -126,3 +126,13 @@ void Cube::draw(ID3D11Buffer* light_constant_buffer, ID3D11Buffer* lightNr_const
 
 	device_context_ptr->Draw(vertex_count, 0);
 }
+
+XMFLOAT3 Cube::getPositionXMFLOAT3()
+{
+	return this->position;
+}
+
+XMVECTOR Cube::getPositionXMVECTOR()
+{
+	return this->posVec;
+}

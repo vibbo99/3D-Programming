@@ -28,6 +28,8 @@ private:
 	ID3D11Device* device_ptr;
 	ID3D11DeviceContext* device_context_ptr;
 
+	VertexDataNormalMap vertex_data_array[6];
+
 	UINT vertex_stride = 0;
 	UINT vertex_offset = 0;
 	UINT vertex_count = 0;
@@ -37,13 +39,25 @@ private:
 	void calcModelVectors(std::vector<XMFLOAT3> vertices, std::vector<XMFLOAT2> texCoords, std::vector<XMFLOAT3> normals, VertexDataNormalMap vertexStruct[]);
 	void setMaterialBuffer();
 public:
+	//Plane();
 	Plane(float x, float y, float z, LPCWSTR texturePath, LPCWSTR normalPath, Camera* camera,
 		ID3D11Device* device_ptr, ID3D11DeviceContext* device_context_ptr);
-
+	Plane();
+	//Pos Rot Scale
 	void setPosition(float x, float y, float z);
-	void scaleSize(float x, float y, float z);
+	
+	void rotateX(float x);
+	void rotateY(float x);
 	void rotateZ(float x);
+
+	void scaleSize(float x, float y, float z);
 
 	void draw(ID3D11Buffer* light_constant_buffer, ID3D11Buffer* lightNr_constant_buffer,
 		ID3D11Buffer* cam_pos_buffer);
+
+	///Getters
+	XMFLOAT3 getPositionXMFLOAT3();
+	XMVECTOR getPositionXMVECTOR();
+
+	XMVECTOR getNormalInfo();
 };

@@ -42,6 +42,9 @@ public:
 	void draw(ID3D11Buffer* light_constant_buffer, ID3D11Buffer* lightNr_constant_buffer,
 		ID3D11Buffer* cam_pos_buffer);
 
+	///Getters
+	XMFLOAT3 getPositionXMFLOAT3();
+	XMVECTOR getPositionXMVECTOR();
 };
 
 

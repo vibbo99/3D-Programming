@@ -15,6 +15,8 @@ private:
 	XMVECTOR camTarget;
 	XMVECTOR right;
 
+	float fieldOfView;
+
 	int mouseX = 0;
 	int mouseY = 0;
 	int tempValueX = 0;
@@ -44,6 +46,8 @@ public:
 	const XMVECTOR& getRotationVector() const;
 	const XMFLOAT3& getRotationFloat3() const;
 	const XMFLOAT3& getCamTarget() const;
+
+	const float& getFieldOfView() const;
 
 	//Setters
 	void setPosition(const XMVECTOR& pos);
