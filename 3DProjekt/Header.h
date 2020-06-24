@@ -72,6 +72,11 @@ struct Material
 	DirectX::XMFLOAT4 m_specular;
 	DirectX::XMFLOAT4 m_otherInfo;
 };
+struct TextureOffset
+{
+	float texOffset;
+	DirectX::XMFLOAT3 pad;
+};
 
 static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {

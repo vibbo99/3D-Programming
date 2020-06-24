@@ -263,7 +263,7 @@ void Plane::rotateZ(float x)
 }
 
 void Plane::draw(ID3D11Buffer* light_constant_buffer, ID3D11Buffer* lightNr_constant_buffer,
-	ID3D11Buffer* cam_pos_buffer)
+	ID3D11Buffer* cam_pos_buffer, ID3D11Buffer* time_buffer_ptr, ID3D11SamplerState* m_sampleState)
 {
 	//1. Refresh constant buffers
 	shader->updateShader(device_context_ptr, camera);
@@ -284,12 +284,27 @@ void Plane::draw(ID3D11Buffer* light_constant_buffer, ID3D11Buffer* lightNr_cons
 	{
 		device_context_ptr->PSSetShaderResources(1, 1, &normalResource);
 	}
-	if (light_constant_buffer != NULL)
+	if (time_buffer_ptr != NULL) 
 	{
-		device_context_ptr->PSSetConstantBuffers(0, 1, &light_constant_buffer);
-		device_context_ptr->PSSetConstantBuffers(1, 1, &lightNr_constant_buffer);
-		device_context_ptr->PSSetConstantBuffers(2, 1, &cam_pos_buffer);
+		if (light_constant_buffer != NULL)
+		{
+			device_context_ptr->PSSetConstantBuffers(0, 1, &light_constant_buffer);
+			device_context_ptr->PSSetConstantBuffers(1, 1, &lightNr_constant_buffer);
+			device_context_ptr->PSSetConstantBuffers(2, 1, &cam_pos_buffer);
+			device_context_ptr->PSSetConstantBuffers(3, 1, &time_buffer_ptr);
+			//device_context_ptr->PSSetSamplers(0, 1, &m_sampleState);
+		}
 	}
+	else
+	{
+		if (light_constant_buffer != NULL)
+		{
+			device_context_ptr->PSSetConstantBuffers(0, 1, &light_constant_buffer);
+			device_context_ptr->PSSetConstantBuffers(1, 1, &lightNr_constant_buffer);
+			device_context_ptr->PSSetConstantBuffers(2, 1, &cam_pos_buffer);
+		}
+	}
+
 	//device_context_ptr->PSSetConstantBuffers(3, 1, &material_buffer_ptr);
 	//5. Output Merger
 

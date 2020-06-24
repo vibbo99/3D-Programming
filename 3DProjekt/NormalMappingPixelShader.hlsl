@@ -9,7 +9,7 @@ struct ps_in
 };
 Texture2D myTexture: register(t0);
 Texture2D normalTexture : register(t1);
-SamplerState samplerState;
+SamplerState samplerState : register(s0);
 struct Point_Light
 {
 	float4 l_Position;

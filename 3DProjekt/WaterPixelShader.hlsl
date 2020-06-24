@@ -7,9 +7,12 @@ struct ps_in
     float4 tangent : TANGENT;
 	//float4x4 TBN : TBNMATRIX;
 };
+
 Texture2D myTexture : register(t0);
 Texture2D normalTexture : register(t1);
-SamplerState samplerState;
+//SamplerState samplerState;
+SamplerState waterSamplerState : register(s0);
+
 struct Point_Light
 {
     float4 l_Position;
@@ -35,6 +38,11 @@ cbuffer Camera : register(b2)
     float4 camera_pos;
 }
 
+cbuffer TEXMoverValue : register(b3)
+{
+    float texOffset;
+}
+
 float4 calcPointLight(Point_Light pl, ps_in input);
 float4 ps_main(ps_in input) : SV_TARGET
 {
@@ -49,20 +57,15 @@ float4 ps_main(ps_in input) : SV_TARGET
 }
 float4 calcPointLight(Point_Light pl, ps_in input)
 {
-    float3 ambient = pl.l_Ambient;
-    float4 tex = myTexture.Sample(samplerState, input.texcoord);
-    ambient *= tex.xyz;
-	
-    float2 moverDir = (1, 0);
-    float speed = 1.0f;
+    float speed = 1.f;
     float2 movedTexcoord = input.texcoord;
-	
-	// Do this in update
-    //movedTexcoord += moverDir * speed;
-    movedTexcoord.x = movedTexcoord.x + 0.5f;
-	
-    //normalTexture[input.texcoord.x + 1];
-    float4 normalMap = normalTexture.Sample(samplerState, movedTexcoord);
+    movedTexcoord.x += texOffset;
+    
+    float3 ambient = pl.l_Ambient;
+    float4 tex = myTexture.Sample(waterSamplerState, input.texcoord);
+    ambient *= tex.xyz;
+    
+    float4 normalMap = normalTexture.Sample(waterSamplerState, movedTexcoord);
     normalMap = (2.0f * normalMap) - 1.0f;
     input.tangent = normalize(input.tangent - dot(input.tangent, input.normal) * input.normal);
 

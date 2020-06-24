@@ -4,6 +4,9 @@
 
 void Window::_createSwapChain()
 {
+	RECT winRect;
+	GetClientRect(this->hwnd, &winRect);
+
 	DXGI_SWAP_CHAIN_DESC swap_chain_descr = { 0 };
 
 	swap_chain_descr.BufferDesc.RefreshRate.Numerator = 0;
@@ -15,6 +18,8 @@ void Window::_createSwapChain()
 	swap_chain_descr.BufferCount = 1;
 	swap_chain_descr.OutputWindow = this->hwnd;
 	swap_chain_descr.Windowed = true;
+	swap_chain_descr.BufferDesc.Width = winRect.right;
+	swap_chain_descr.BufferDesc.Height = winRect.bottom;
 
 	D3D_FEATURE_LEVEL feature_level;
 	UINT flags = D3D11_CREATE_DEVICE_SINGLETHREADED;
@@ -50,9 +55,12 @@ void Window::_createSwapChain()
 
 void Window::_createDepthBuffer()
 {
+	RECT winRect;
+	GetClientRect(this->hwnd, &winRect);
+
 	D3D11_TEXTURE2D_DESC descDepth;
-	descDepth.Width = WIDTH;
-	descDepth.Height = HEIGHT;
+	descDepth.Width = winRect.right;
+	descDepth.Height = winRect.bottom;
 	descDepth.MipLevels = 1;
 	descDepth.ArraySize = 1;
 	descDepth.Format = DXGI_FORMAT_D32_FLOAT_S8X24_UINT;

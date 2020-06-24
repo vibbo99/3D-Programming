@@ -6,7 +6,7 @@ struct ps_in
 };
 
 Texture2D myTexture: register(t0);
-SamplerState samplerState;
+SamplerState samplerState : register(s0);
 TextureCube SkyMap;
 
 float4 ps_main(vs_output input) : SV_TARGET

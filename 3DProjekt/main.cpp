@@ -9,10 +9,13 @@
 #include "Sphere.h"
 #include "SkyBoxCube.h"
 #include "SkyBoxSphere.h"
+#include "Timer.h"
 
 ID3D11Buffer* light_constant_buffer_ptr = NULL;
 ID3D11Buffer* lightNr_constant_buffer_ptr = NULL;
 ID3D11Buffer* camera_pos_buffer = NULL;
+ID3D11Buffer* time_buffer_ptr = NULL;
+ID3D11SamplerState* m_sampleState = NULL;
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
 {
@@ -21,6 +24,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	camera.setPosition(0, 0, 0);
 	camera.setupMouse(window.getHwind());
 
+	Timer m_timer;
+	float m_deltaTime = 0;
+	//float textureOffset = 0;
+	TextureOffset texOffset;
+	texOffset.texOffset = 0;
+	
 
 	/*Point_Light pl(XMFLOAT3(0.0f, 2.0f, 0.0f), window.getDevicePtr(), window.getDeviceContextPtr(), &camera);
 	pl.setScale(0.5, 0.5, 0.5);*/
@@ -30,7 +39,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	
 	Plane planeObject(0.0f, -2.0f, 0.0f, L"texture2.png", L"texture2_normal.png", &camera, window.getDevicePtr(), window.getDeviceContextPtr());
 
-	Plane waterPlane(3.0f, -6.0f, 3.0f, L"blue_texture.png", L"water_normal_debug.png", &camera, window.getDevicePtr(), window.getDeviceContextPtr(), true);
+	Plane waterPlane(3.0f, -6.0f, 3.0f, L"blue_texture.png", L"water_normal.png", &camera, window.getDevicePtr(), window.getDeviceContextPtr(), true);
 	
 	Sphere sphereObject(-4.0f, 0.0f, 4.0f, LPCWSTR(L"groundTexture.jpg"), &camera, window.getDevicePtr(), window.getDeviceContextPtr());
 
@@ -60,7 +69,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	//Setprojection
 	camera.setProjectionValues(70.0f, static_cast<float>(WIDTH) / static_cast<float>(HEIGHT), 0.1f, 1000.0f);
 
-
+	// Fill lightNr_constant_buffer_ptr
 	XMFLOAT4 nrOfLights = XMFLOAT4(4.0f, 0.0f, 0.0f, 1.0f);
 	D3D11_BUFFER_DESC desc;
 	desc.ByteWidth = sizeof(XMFLOAT4);
@@ -80,6 +89,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	if (FAILED(hr))
 		assert(FAILED(hr));
 
+	// Fill light_constant_buffer_ptr
 	Point_Light_Struct lStruct[4];
 	for (int i = 0; i < 4; i++)
 	{
@@ -103,6 +113,44 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	if (FAILED(hr))
 		assert(FAILED(hr));
 
+	// Fill time_buffer_ptr
+	D3D11_BUFFER_DESC timeDesc;
+	timeDesc.ByteWidth = sizeof(TextureOffset);
+	timeDesc.Usage = D3D11_USAGE_DYNAMIC; //D3D11_USAGE_DEFAULT
+	timeDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	timeDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	timeDesc.MiscFlags = 0;
+	timeDesc.StructureByteStride = 0;
+
+	D3D11_SUBRESOURCE_DATA timeData;
+	timeData.pSysMem = &texOffset;
+	timeData.SysMemPitch = 0;
+	timeData.SysMemSlicePitch = 0;
+	
+	hr = window.getDevicePtr()->CreateBuffer(&timeDesc, &timeData, &time_buffer_ptr);
+	if (FAILED(hr))
+		assert(FAILED(hr));
+
+	// water normal samplerstate
+	D3D11_SAMPLER_DESC samplerDesc;
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.MipLODBias = 0.0f;
+	samplerDesc.MaxAnisotropy = 1;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	samplerDesc.BorderColor[0] = 0;
+	samplerDesc.BorderColor[1] = 0;
+	samplerDesc.BorderColor[2] = 0;
+	samplerDesc.BorderColor[3] = 0;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	// Create the texture sampler state.
+	hr = window.getDevicePtr()->CreateSamplerState(&samplerDesc, &m_sampleState);
+
+
 	ID3D11Resource* texture;
 	ID3D11ShaderResourceView* srw;
 	ObjLoader loader;
@@ -116,6 +164,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 		camera.processKeyboard(0.5);
 		camera.processMouse(0.5);
 
+		m_deltaTime = (float)m_timer.timeElapsed();
+		m_timer.restart();
+
+		// Fill camera_pos_buffer
 		D3D11_BUFFER_DESC camDesc;
 		camDesc.ByteWidth = sizeof(XMFLOAT4);
 		camDesc.Usage = D3D11_USAGE_DYNAMIC; //D3D11_USAGE_DEFAULT
@@ -135,10 +187,34 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 		if (FAILED(hr))
 			assert(FAILED(hr));
 		
+		// TEXOffset
+		//float normalizedTime = ((m_deltaTime - 0) / (999999 - 0));
+		texOffset.texOffset += 0.001f;
+		if (texOffset.texOffset > 1.0f)
+			texOffset.texOffset = -1.0f;
+
+		// update constant buffer "texture"
+		D3D11_MAPPED_SUBRESOURCE mapSubresource;
+		hr = window.getDeviceContextPtr()->Map(time_buffer_ptr, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapSubresource);
+		assert(SUCCEEDED(hr) && "Error, failed to map constant buffer!");
+		
+		CopyMemory(mapSubresource.pData, &texOffset, sizeof(TextureOffset));
+
+		window.getDeviceContextPtr()->Unmap(time_buffer_ptr, 0);
+
+
+
+
+
+
+
+		// Render window
 		window.getDeviceContextPtr()->ClearRenderTargetView(*window.getRenderTargetViewPtr(), background_colour);
 		window.clearDepthStencil();
 		window.getDeviceContextPtr()->RSSetViewports(1, window.getViewportPtr());
 		window.getDeviceContextPtr()->OMSetRenderTargets(1, window.getRenderTargetViewPtr(), window.getDepthStencilViewPtr());
+
+		window.getDeviceContextPtr()->PSSetSamplers(0, 1, &m_sampleState);
 		
 		//Draw cube object
 		cube.draw(light_constant_buffer_ptr, lightNr_constant_buffer_ptr, camera_pos_buffer);
@@ -150,7 +226,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 		//planeObject.rotateZ(-0.5);
 		planeObject.draw(light_constant_buffer_ptr, lightNr_constant_buffer_ptr, camera_pos_buffer);
 
-		waterPlane.draw(light_constant_buffer_ptr, lightNr_constant_buffer_ptr, camera_pos_buffer);
+		waterPlane.draw(light_constant_buffer_ptr, lightNr_constant_buffer_ptr, camera_pos_buffer, time_buffer_ptr);
 
 
 		//Draw sphere

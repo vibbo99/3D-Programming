@@ -29,6 +29,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SkyBoxSphere.h" />
     <ClInclude Include="Sphere.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -42,6 +43,7 @@
     <ClCompile Include="SkyBoxCube.cpp" />
     <ClCompile Include="SkyBoxSphere.cpp" />
     <ClCompile Include="Sphere.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>

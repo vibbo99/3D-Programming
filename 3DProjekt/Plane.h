@@ -45,5 +45,5 @@ public:
 	void rotateZ(float x);
 
 	void draw(ID3D11Buffer* light_constant_buffer, ID3D11Buffer* lightNr_constant_buffer,
-		ID3D11Buffer* cam_pos_buffer);
+		ID3D11Buffer* cam_pos_buffer, ID3D11Buffer* time_buffer_ptr = NULL, ID3D11SamplerState* m_sampleState = NULL);
 };
