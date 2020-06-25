@@ -17,14 +17,10 @@ private:
 	XMMATRIX proj;
 	XMMATRIX view;
 
-	XMFLOAT2 mouseNormalized;
-	XMFLOAT4 clip;
-	XMFLOAT4 eye;
-
 	XMVECTOR world;
 	XMVECTOR rayPos;
 
-	XMMATRIX worldInverse;
+	XMMATRIX viewInverse;
 
 	float aspectRatio;
 
@@ -46,15 +42,12 @@ public:
 
 	void mouseToCoords(float x, float y);
 
+	//Getters
 
 	XMVECTOR getRayDir();
 	XMVECTOR getRayPos();
 
-	//XMFLOAT4 toEye(XMFLOAT4 aClip);
-	//XMVECTOR toWorld(XMFLOAT4 anEye);
-
-	//XMVECTOR getWorld();
-
-	//XMFLOAT2 normalizeMouse(float x, float y);
+	XMFLOAT3 getRayDirFloat3();
+	XMFLOAT3 getRayPosFloat3();
 
 };

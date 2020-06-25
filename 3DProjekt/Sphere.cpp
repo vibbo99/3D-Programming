@@ -86,6 +86,7 @@ void Sphere::setPosition(float x, float y, float z)
 
 void Sphere::scaleSize(float x, float y, float z)
 {
+	this->scale = XMVectorSet(x, y, z, 1.f);
 	shader->setModelMatrix(XMMatrixScaling(x, y, z) * XMMatrixTranslationFromVector(this->posVec));
 
 }
@@ -93,6 +94,11 @@ void Sphere::scaleSize(float x, float y, float z)
 XMVECTOR Sphere::getCENTERXMVECTOR()
 {
 	return posVec;
+}
+
+XMVECTOR Sphere::getScale()
+{
+	return this->scale;
 }
 
 void Sphere::draw(ID3D11Buffer* light_constant_buffer, ID3D11Buffer* lightNr_constant_buffer,

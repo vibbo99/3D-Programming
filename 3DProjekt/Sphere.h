@@ -18,6 +18,8 @@ private:
 
 	Shader* shader;
 
+	XMVECTOR scale;
+
 	Camera* camera;
 	ID3D11Device* device_ptr;
 	ID3D11DeviceContext* device_context_ptr;
@@ -36,6 +38,7 @@ public:
 
 	//Getters
 	XMVECTOR getCENTERXMVECTOR();
+	XMVECTOR getScale();
 
 	void draw(ID3D11Buffer* light_constant_buffer = NULL, ID3D11Buffer* lightNr_constant_buffer = NULL,
 		ID3D11Buffer* cam_pos_buffer = NULL);
