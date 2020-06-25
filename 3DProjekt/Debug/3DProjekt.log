@@ -1,14 +1,4 @@
-﻿C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(50,22-31): warning X3081: comma expression used where a vector constructor may have been intended
-C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(50,22-37): warning X3081: comma expression used where a vector constructor may have been intended
-C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(50,22-43): warning X3081: comma expression used where a vector constructor may have been intended
-C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(67,12-33): warning X3206: implicit truncation of vector type
-C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(98,24-57): warning X3206: 'cross': implicit truncation of vector type
-C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(98,24-57): warning X3206: 'cross': implicit truncation of vector type
-C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(100,29-52): warning X3206: 'mul': implicit truncation of vector type
-C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(102,12-64): warning X3206: implicit truncation of vector type
-C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(104,22-50): warning X3206: implicit truncation of vector type
-C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(112,12-60): warning X3206: implicit truncation of vector type
-C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\WaterPixelShader.hlsl(115,12-55): warning X3206: implicit truncation of vector type
+﻿C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\GeometryShader.hlsl(48,13-34): warning X4000: use of potentially uninitialized variable (element)
+C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\3DProjekt\GeometryShader.hlsl(48,13-34): error X4575: reading uninitialized value
   
-  compilation object save succeeded; see C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\Debug\WaterPixelShader.cso
-  3DProjekt.vcxproj -> C:\Users\vibbo\OneDrive\Skrivbord\3D-Programming\Debug\3DProjekt.exe
+  compilation failed; no code produced

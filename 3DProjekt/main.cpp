@@ -14,7 +14,7 @@
 ID3D11Buffer* light_constant_buffer_ptr = NULL;
 ID3D11Buffer* lightNr_constant_buffer_ptr = NULL;
 ID3D11Buffer* camera_pos_buffer = NULL;
-ID3D11Buffer* time_buffer_ptr = NULL;
+ID3D11Buffer* uvOffset_buffer_ptr = NULL;
 ID3D11SamplerState* m_sampleState = NULL;
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
@@ -26,7 +26,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 
 	Timer m_timer;
 	float m_deltaTime = 0;
-	//float textureOffset = 0;
 	TextureOffset texOffset;
 	texOffset.texOffset = 0;
 	
@@ -113,21 +112,21 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	if (FAILED(hr))
 		assert(FAILED(hr));
 
-	// Fill time_buffer_ptr
-	D3D11_BUFFER_DESC timeDesc;
-	timeDesc.ByteWidth = sizeof(TextureOffset);
-	timeDesc.Usage = D3D11_USAGE_DYNAMIC; //D3D11_USAGE_DEFAULT
-	timeDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	timeDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	timeDesc.MiscFlags = 0;
-	timeDesc.StructureByteStride = 0;
+	// Fill uvOffset_buffer_ptr
+	D3D11_BUFFER_DESC uvOffsetDesc;
+	uvOffsetDesc.ByteWidth = sizeof(TextureOffset);
+	uvOffsetDesc.Usage = D3D11_USAGE_DYNAMIC; //D3D11_USAGE_DEFAULT
+	uvOffsetDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	uvOffsetDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	uvOffsetDesc.MiscFlags = 0;
+	uvOffsetDesc.StructureByteStride = 0;
 
-	D3D11_SUBRESOURCE_DATA timeData;
-	timeData.pSysMem = &texOffset;
-	timeData.SysMemPitch = 0;
-	timeData.SysMemSlicePitch = 0;
+	D3D11_SUBRESOURCE_DATA uvOffsetData;
+	uvOffsetData.pSysMem = &texOffset;
+	uvOffsetData.SysMemPitch = 0;
+	uvOffsetData.SysMemSlicePitch = 0;
 	
-	hr = window.getDevicePtr()->CreateBuffer(&timeDesc, &timeData, &time_buffer_ptr);
+	hr = window.getDevicePtr()->CreateBuffer(&uvOffsetDesc, &uvOffsetData, &uvOffset_buffer_ptr);
 	if (FAILED(hr))
 		assert(FAILED(hr));
 
@@ -189,18 +188,18 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 		
 		// TEXOffset
 		//float normalizedTime = ((m_deltaTime - 0) / (999999 - 0));
-		texOffset.texOffset += 0.001f;
+		texOffset.texOffset += (0.1f * m_deltaTime);
 		if (texOffset.texOffset > 1.0f)
 			texOffset.texOffset = -1.0f;
 
 		// update constant buffer "texture"
 		D3D11_MAPPED_SUBRESOURCE mapSubresource;
-		hr = window.getDeviceContextPtr()->Map(time_buffer_ptr, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapSubresource);
+		hr = window.getDeviceContextPtr()->Map(uvOffset_buffer_ptr, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapSubresource);
 		assert(SUCCEEDED(hr) && "Error, failed to map constant buffer!");
 		
 		CopyMemory(mapSubresource.pData, &texOffset, sizeof(TextureOffset));
 
-		window.getDeviceContextPtr()->Unmap(time_buffer_ptr, 0);
+		window.getDeviceContextPtr()->Unmap(uvOffset_buffer_ptr, 0);
 
 
 
@@ -226,7 +225,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 		//planeObject.rotateZ(-0.5);
 		planeObject.draw(light_constant_buffer_ptr, lightNr_constant_buffer_ptr, camera_pos_buffer);
 
-		waterPlane.draw(light_constant_buffer_ptr, lightNr_constant_buffer_ptr, camera_pos_buffer, time_buffer_ptr);
+		waterPlane.draw(light_constant_buffer_ptr, lightNr_constant_buffer_ptr, camera_pos_buffer, uvOffset_buffer_ptr);
 
 
 		//Draw sphere

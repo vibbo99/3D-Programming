@@ -6,7 +6,7 @@ struct ps_in
 	float4 world_pos : WORLD_POS;
 };
 Texture2D myTexture: register(t0);
-SamplerState samplerState;
+SamplerState samplerState : register(s0);
 
 struct Point_Light
 {
@@ -69,7 +69,7 @@ float4 calcPointLight(Point_Light pl, ps_in input)
 	float3 norm = normalize(input.normal);
 	float3 lightDir = normalize(pl.l_Position - input.world_pos);
 	float diff = max(dot(norm, lightDir), 0.0);
-	float3 diffuse = pl.l_Diffuse * diff * tex.xyz;
+	float3 diffuse = pl.l_Diffuse.xyz * diff * tex.xyz;
 
 	float distance = length(pl.l_Position - input.world_pos);
 	float attenuation = 1.0 / (pl.l_Attenuation.x +
