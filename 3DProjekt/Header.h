@@ -27,8 +27,8 @@
 #include <Mouse.h>
 #include <vector>
 
-const float HEIGHT = 720;
-const float WIDTH = 1280;
+const float HEIGHT = 1080;
+const float WIDTH = 1920;
 struct MVP
 {
 	DirectX::XMMATRIX model;

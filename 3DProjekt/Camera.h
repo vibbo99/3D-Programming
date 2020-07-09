@@ -24,6 +24,8 @@ private:
 	int differenceX = 0;
 	int differenceY = 0;
 
+	bool flipViewOnce = false;
+
 	const XMVECTOR DEFAULT_FORWARD_VECTOR = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
 	const XMVECTOR DEFAULT_UP_VECTOR = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 
@@ -34,7 +36,7 @@ public:
 	Camera();
 	void setProjectionValues(float fovDegrees, float aspectRation, float nearZ, float farZ);
 	void processKeyboard(float deltaTime);
-	//void processMouse(float deltaTime);
+	void processMouse(float mouseX, float mouseY);
 	void setupMouse(HWND hwnd);
 
 	//Getters

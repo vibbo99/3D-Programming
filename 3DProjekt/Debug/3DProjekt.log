@@ -1,8 +1,13 @@
-﻿  main.cpp
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(72,41): warning C4316: 'mousePicking': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(105,118): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(107,120): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(110,121): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(113,119): warning C4316: 'Point_Light': object allocated on the heap may not be aligned 16
-E:\3D Projekt\3D-Programming\3DProjekt\main.cpp(115,48): warning C4305: 'argument': truncation from 'double' to 'float'
+﻿  Camera.cpp
+E:\3D Projekt\3D-Programming\3DProjekt\Camera.cpp(39,66): warning C4305: 'argument': truncation from 'double' to 'float'
+E:\3D Projekt\3D-Programming\3DProjekt\Camera.cpp(43,67): warning C4305: 'argument': truncation from 'double' to 'float'
+E:\3D Projekt\3D-Programming\3DProjekt\Camera.cpp(47,43): warning C4305: 'argument': truncation from 'double' to 'float'
+E:\3D Projekt\3D-Programming\3DProjekt\Camera.cpp(51,42): warning C4305: 'argument': truncation from 'double' to 'float'
+E:\3D Projekt\3D-Programming\3DProjekt\Camera.cpp(76,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\3D Projekt\3D-Programming\3DProjekt\Camera.cpp(77,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\3D Projekt\3D-Programming\3DProjekt\Camera.cpp(122,36): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\3D Projekt\3D-Programming\3DProjekt\Camera.cpp(127,36): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\3D Projekt\3D-Programming\3DProjekt\Camera.cpp(132,30): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\3D Projekt\3D-Programming\3DProjekt\Camera.cpp(136,30): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+E:\3D Projekt\3D-Programming\3DProjekt\Camera.cpp(197): warning C4172: returning address of local variable or temporary: returnValue
   3DProjekt.vcxproj -> E:\3D Projekt\3D-Programming\Debug\3DProjekt.exe

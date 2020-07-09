@@ -50,4 +50,7 @@ public:
 	XMFLOAT3 getRayDirFloat3();
 	XMFLOAT3 getRayPosFloat3();
 
+	float getMouseX();
+	float getMouseY();
+
 };

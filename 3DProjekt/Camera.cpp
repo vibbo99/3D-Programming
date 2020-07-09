@@ -69,55 +69,86 @@ void Camera::processKeyboard(float deltaTime)
 
 }
 
-//void Camera::processMouse(float deltaTime)
-//{
-//	float speed = 2.5f;
-//	auto theMouse = mouse->GetState();
-//	
+void Camera::processMouse(float mouseX, float mouseY)
+{
+	float speed = 2.5f;
+	
+	this->mouseX = mouseX;
+	this->mouseY = mouseY;
+
+	if (this->flipViewOnce == false)
+	{
+		adjustRotation(XMConvertToRadians(200.f), XMConvertToRadians(180.f), 0.f);
+		this->flipViewOnce = true;
+	}
+	
+	
+
+	//this->adjustRotation(this->mouseX / 800000.f, this->mouseY / 800000, 0.0f);
 //	
 //
 //	speed *= deltaTime;
-//	//mouse->SetVisible(true);
+	
 //	
-//	this-> mouseX = theMouse.x;
-//	this-> mouseY = theMouse.y;
+	//this-> mouseX = theMouse.x;
+	//this-> mouseY = theMouse.y;
 //
-//	this->differenceX = this->mouseX - this->tempValueX;
-//	this->differenceY = this->mouseY - this->tempValueY;
-//
-//
-//
-//	//if (mouseX > tempValueX)
-//	//{
-//	//	this->adjustRotation(0.0f, 0.005 * differenceX, 0.0f);
-//	//}
-//
-//	//else if (mouseX < tempValueX)
-//	//{
-//	//	this->adjustRotation(0.0f, -0.005 * differenceX, 0.0f);
-//	//}
-//
-//	//if (mouseY > tempValueY)
-//	//{
-//	//	this->adjustRotation(0.005 * differenceY, 0.0f, 0.0f);
-//	//}
-//	//else if (mouseY < tempValueY)
-//	//{
-//	//	this->adjustRotation(-0.005 * differenceY, 0.0f, 0.0f);
-//	//}
+	
+
+	//if (mouseY < HEIGHT / 2 - 50)
+	//{
+	//	this->adjustRotation(-0.019, 0.0f, 0.0f);		
+	//}
+	this->differenceX = this->mouseX - this->tempValueX;
+	this->differenceY = this->mouseY - this->tempValueY;
+
+	//else if (mouseY > HEIGHT / 2 + 50 )
+	//{
+	//	this->adjustRotation(0.019, 0.0f, 0.0f);
+	//}
+
+	//else if (mouseX < WIDTH / 2 - 50)
+	//{
+	//	this->adjustRotation(0.f, -0.019f, 0.f);
+	//}
+
+	//else if (mouseX > WIDTH / 2 + 50)
+	//{
+	//	this->adjustRotation(0.f, 0.019, 0.0f);
+	//}
+
+	if (mouseX > tempValueX)
+	{
+		this->adjustRotation(0.0f, 0.005 * differenceX, 0.0f);
+	}
+
+	else if (mouseX < tempValueX)
+	{
+		this->adjustRotation(0.0f, 0.005 * differenceX, 0.0f);
+	}
+
+	if (mouseY > tempValueY)
+	{
+		this->adjustRotation(0.005 * differenceY, 0.0f, 0.0f);
+	}
+	else if (mouseY < tempValueY)
+	{
+		this->adjustRotation(0.005 * differenceY, 0.0f, 0.0f);
+	}
+	
+	
+
+
+	
+	tempValueX = this-> mouseX;
+	tempValueY = this-> mouseY;
+
+	
+	//theMouse.y = 0;
 //	
-//
-//
-//	
-//	tempValueX = this-> mouseX;
-//	tempValueY = this-> mouseY;
-//
-//	
-//	//theMouse.y = 0;
 //	
 //	
-//	
-//}
+}
 
 void Camera::setupMouse(HWND hwnd)
 {

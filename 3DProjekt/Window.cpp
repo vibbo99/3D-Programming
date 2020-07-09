@@ -149,6 +149,9 @@ Window::Window(HINSTANCE hInstance, PWSTR pCmdLine, int nCmdShow)
 
 	RECT winRect;
 	GetClientRect(this->hwnd, &winRect);
+	//Lock mouse to screen
+	//ClipCursor(&winRect);
+	
 
 	this->viewport = new D3D11_VIEWPORT{
 		0.0f,

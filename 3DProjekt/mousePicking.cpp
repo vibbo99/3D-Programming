@@ -16,7 +16,10 @@ mousePicking::mousePicking(Camera *aCamera)
 void mousePicking::processMouse()
 {
 		auto theMouse = mouse->GetState();
-
+		mouse->SetVisible(true);
+	
+		//SetCursorPos(700, 430);
+		//mouse->SetVisible(true);
 		this->mouseX = theMouse.x;
 		this->mouseY = theMouse.y;
 
@@ -26,8 +29,8 @@ void mousePicking::processMouse()
 		//{
 			mouseToCoords(mouseX, mouseY);
 		//}
-
 		
+		 
 }
 
 void mousePicking::update(Camera* aCamera)
@@ -92,5 +95,15 @@ XMFLOAT3 mousePicking::getRayPosFloat3()
 	position.z = this->rayPos.m128_f32[2];
 
 	return position;
+}
+
+float mousePicking::getMouseX()
+{
+	return this->mouseX;
+}
+
+float mousePicking::getMouseY()
+{
+	return this->mouseY;
 }
 

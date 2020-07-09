@@ -55,6 +55,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 
 	int planeDelay = 200;
 
+	//Cursor test
+
+	int setCursorPosOnce = 2;
+	
+
 	//Sphere intersection variables
 	int nrOfSpheres = 0;
 	XMVECTOR sphereCenter[50];
@@ -62,8 +67,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 
 	Sphere sphereObjects[50];
 
-	RedirectIOToConsole();
+	//If you want to display console information
 
+	//RedirectIOToConsole();
+	
 	camera.setPosition(0, 0, 0);
 	camera.setupMouse(window.getHwind());
 
@@ -121,6 +128,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	}
 
 	ShowWindow(window.getHwind(), nCmdShow);
+	
+	
 	// ---
 	//Setprojection
 	camera.setProjectionValues(70.0f, static_cast<float>(WIDTH) / static_cast<float>(HEIGHT), 0.1f, 1000.0f);
@@ -183,8 +192,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 
 		//Test mouse-picking
 
-
-
+		
+		//SetPhysicalCursorPos((int)WIDTH / 2, (int)HEIGHT / 2);
+		
 
 		D3D11_BUFFER_DESC camDesc;
 		camDesc.ByteWidth = sizeof(XMFLOAT4);
@@ -203,6 +213,23 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 		mousePicker->update(&camera);
 
 		mousePos = mousePicker->getRayDirFloat3();
+
+		//Rotate with mouse movement.
+		if (setCursorPosOnce <= 100)
+		{
+			SetCursorPos((int)WIDTH / 2, (int)HEIGHT / 2);
+			setCursorPosOnce++;
+		}
+		camera.processMouse(mousePicker->getMouseX(), mousePicker->getMouseY());
+
+		/*if (mousePicker->getMouseX() >= 1910)
+		{
+			//SetCursorPos(1915, mousePicker->getMouseY());
+		}
+		//else if (mousePicker->getMouseX() <= 10)
+		//{
+			//SetCursorPos(5, mousePicker->getMouseY());
+		//}*/
 
 		for (int i = 0; i < nrOfSpheres; i++)
 		{
@@ -236,7 +263,19 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 			}
 		}
 		
-
+		//if (mousePicker->getMouseX() > 1920)
+		//{
+		//	setCursorPosOnce = 0;
+		//	
+		//}
+		////SetPhysicalCursorPos(700, 430);
+		//if (setCursorPosOnce == 0)
+		//{
+		//	SetCursorPos((int)WIDTH / 2, (int)HEIGHT / 2);
+		//	setCursorPosOnce = 1;
+		//}
+		
+		//SetCursorPos((int)WIDTH / 2, (int)HEIGHT / 2);
 		
 
 		HRESULT hr = window.getDevicePtr()->CreateBuffer(&camDesc, &camData, &camera_pos_buffer);
