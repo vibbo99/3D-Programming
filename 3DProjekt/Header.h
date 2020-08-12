@@ -11,6 +11,7 @@
 #define WIN32_LEAN_AND_MEAN
 
 #include <WICTextureLoader.h>
+#include <DDSTextureLoader.h>
 #include <stdio.h>
 #include <windows.h>
 #include <d3d11.h>
@@ -27,8 +28,8 @@
 #include <Mouse.h>
 #include <vector>
 
-const float HEIGHT = 1080;
-const float WIDTH = 1920;
+const float HEIGHT = 720;
+const float WIDTH = 1280;
 struct MVP
 {
 	DirectX::XMMATRIX model;
@@ -37,7 +38,7 @@ struct MVP
 	DirectX::XMMATRIX modelViewPerspective;
 };
 const float background_colour[4] = {
-	0.f, 0.f, 0.f, 0.f};
+	0.f, 0.f, 0.f, 1.f};
 
 struct VertexData {
 	float pX, pY, pZ;
@@ -77,6 +78,32 @@ static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM l
 {
 	switch (uMsg)
 	{
+	
+	case WM_RBUTTONUP:
+		DirectX::Mouse::ProcessMessage(uMsg, wParam, lParam);
+		break;
+
+	case WM_RBUTTONDOWN:
+		DirectX::Mouse::ProcessMessage(uMsg, wParam, lParam);
+		break;
+
+	case WM_LBUTTONDOWN:
+		DirectX::Mouse::ProcessMessage(uMsg, wParam, lParam);
+		break;
+
+	case WM_LBUTTONUP:
+		DirectX::Mouse::ProcessMessage(uMsg, wParam, lParam);
+		break;
+
+	case WM_INPUT:
+		DirectX::Mouse::ProcessMessage(uMsg, wParam, lParam);
+		break;
+	//If tabbed out and window is selected
+	case WM_ACTIVATEAPP:
+		DirectX::Keyboard::ProcessMessage(uMsg, wParam, lParam);
+		DirectX::Mouse::ProcessMessage(uMsg, wParam, lParam);
+		break;
+
 	case WM_MOUSEMOVE:
 		
 		DirectX::Mouse::ProcessMessage(uMsg, wParam, lParam);

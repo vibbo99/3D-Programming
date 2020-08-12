@@ -2,9 +2,9 @@
 
 void Camera::_updateViewMatrix()
 {
-	XMMATRIX camRotationMatrix = XMMatrixRotationRollPitchYaw(this->rotation.x, this->rotation.y, this->rotation.z);
+	XMMATRIX camRotationMatrix = XMMatrixRotationRollPitchYaw(this->rotation.x, this->rotation.y, 0.f);
 	camTarget = XMVector3TransformCoord(this->DEFAULT_FORWARD_VECTOR, camRotationMatrix);
-	
+	//camTarget += this->posVector;
 
 	right = XMVector3Normalize(XMVector3Cross(DEFAULT_UP_VECTOR, camTarget));
 	XMVECTOR upDir = XMVector3TransformCoord(this->DEFAULT_UP_VECTOR, camRotationMatrix);
@@ -22,8 +22,8 @@ Camera::Camera()
 
 void Camera::setProjectionValues(float fovDegrees, float aspectRation, float nearZ, float farZ)
 {
-	float fovRadians = (fovDegrees / 260.0f) * XM_2PI;
-	//fieldOfView = (fovDegrees / 260.0f) * XM_2PI;;
+	float fovRadians = (fovDegrees / 360.0f) * XM_2PI;
+	fieldOfView = (fovDegrees / 360.0f) * XM_2PI;;
 	this->projectionMatrix = XMMatrixPerspectiveFovLH(fovRadians, aspectRation, nearZ, farZ);
 }
 
@@ -71,83 +71,28 @@ void Camera::processKeyboard(float deltaTime)
 
 void Camera::processMouse(float mouseX, float mouseY)
 {
-	float speed = 2.5f;
+	//So it doesn't lock itself when rotating in x
+	float preventGimb = XM_PI/2.f -0.01f;
 	
-	this->mouseX = mouseX;
-	this->mouseY = mouseY;
+	this->rotation.x += mouseY * 0.005;
+	this->rotation.y += mouseX * 0.005;
 
-	if (this->flipViewOnce == false)
+	this->rotation.x = max(-preventGimb, rotation.x);
+	this->rotation.x = min(preventGimb, rotation.x);
+
+	if (rotation.x > XM_PI)
 	{
-		adjustRotation(XMConvertToRadians(200.f), XMConvertToRadians(180.f), 0.f);
-		this->flipViewOnce = true;
-	}
-	
-	
-
-	//this->adjustRotation(this->mouseX / 800000.f, this->mouseY / 800000, 0.0f);
-//	
-//
-//	speed *= deltaTime;
-	
-//	
-	//this-> mouseX = theMouse.x;
-	//this-> mouseY = theMouse.y;
-//
-	
-
-	//if (mouseY < HEIGHT / 2 - 50)
-	//{
-	//	this->adjustRotation(-0.019, 0.0f, 0.0f);		
-	//}
-	this->differenceX = this->mouseX - this->tempValueX;
-	this->differenceY = this->mouseY - this->tempValueY;
-
-	//else if (mouseY > HEIGHT / 2 + 50 )
-	//{
-	//	this->adjustRotation(0.019, 0.0f, 0.0f);
-	//}
-
-	//else if (mouseX < WIDTH / 2 - 50)
-	//{
-	//	this->adjustRotation(0.f, -0.019f, 0.f);
-	//}
-
-	//else if (mouseX > WIDTH / 2 + 50)
-	//{
-	//	this->adjustRotation(0.f, 0.019, 0.0f);
-	//}
-
-	if (mouseX > tempValueX)
-	{
-		this->adjustRotation(0.0f, 0.005 * differenceX, 0.0f);
+		rotation.x -= XM_PI * 2;
 	}
 
-	else if (mouseX < tempValueX)
+	else if (rotation.x < -XM_PI)
 	{
-		this->adjustRotation(0.0f, 0.005 * differenceX, 0.0f);
+		rotation.x += XM_PI * 2;
 	}
 
-	if (mouseY > tempValueY)
-	{
-		this->adjustRotation(0.005 * differenceY, 0.0f, 0.0f);
-	}
-	else if (mouseY < tempValueY)
-	{
-		this->adjustRotation(0.005 * differenceY, 0.0f, 0.0f);
-	}
-	
-	
+	this->rotVector = XMLoadFloat3(&this->rotation);
+	this->_updateViewMatrix();
 
-
-	
-	tempValueX = this-> mouseX;
-	tempValueY = this-> mouseY;
-
-	
-	//theMouse.y = 0;
-//	
-//	
-//	
 }
 
 void Camera::setupMouse(HWND hwnd)

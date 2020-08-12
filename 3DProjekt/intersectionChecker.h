@@ -26,6 +26,8 @@ public:
 	intersectionChecker();
 
 
+	bool cubeCheck(float cubeWidth, XMFLOAT3 cubePosition, XMVECTOR rayOrigin, XMVECTOR rayDirection);
+
 	float collisionCheck(int index, XMVECTOR rayPosition, float& distance, XMVECTOR rayDirection, XMVECTOR normals[], std::string shape, XMVECTOR center[], float radius[]);
 
 	

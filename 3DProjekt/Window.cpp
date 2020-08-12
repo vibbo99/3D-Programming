@@ -11,10 +11,13 @@ void Window::_createSwapChain()
 	swap_chain_descr.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
 	swap_chain_descr.SampleDesc.Count = 1;
 	swap_chain_descr.SampleDesc.Quality = 0;
-	swap_chain_descr.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	//| DXGI_USAGE_SHADER_INPUT for shader
+	swap_chain_descr.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT | DXGI_USAGE_SHADER_INPUT;
 	swap_chain_descr.BufferCount = 1;
 	swap_chain_descr.OutputWindow = this->hwnd;
 	swap_chain_descr.Windowed = true;
+	swap_chain_descr.BufferDesc.Width = WIDTH;
+	swap_chain_descr.BufferDesc.Height = HEIGHT;
 
 	D3D_FEATURE_LEVEL feature_level;
 	UINT flags = D3D11_CREATE_DEVICE_SINGLETHREADED;
@@ -110,6 +113,68 @@ void Window::_createDepthState()
 	device_context_ptr->OMSetDepthStencilState(pDSState, 1);
 }
 
+void Window::_createRSCullNone()
+{
+	D3D11_RASTERIZER_DESC rasterizerDesc;
+	rasterizerDesc.FillMode = D3D11_FILL_SOLID;
+	rasterizerDesc.CullMode = D3D11_CULL_NONE;
+	rasterizerDesc.FrontCounterClockwise = true;
+	rasterizerDesc.DepthBias = false;
+	rasterizerDesc.DepthBiasClamp = 0;
+	rasterizerDesc.SlopeScaledDepthBias = 0;
+	rasterizerDesc.DepthClipEnable = true;
+	rasterizerDesc.ScissorEnable = true;
+	rasterizerDesc.MultisampleEnable = false;
+	rasterizerDesc.AntialiasedLineEnable = false;
+
+	HRESULT hr = device_ptr->CreateRasterizerState(&rasterizerDesc, &RSCullNone);
+
+	assert(SUCCEEDED(hr));
+}
+
+//Glow
+void Window::_createNoGlowTexture()
+{
+	ID3D11Texture2D* noGlowTexture;
+
+	D3D11_TEXTURE2D_DESC textureDesc;
+
+	ZeroMemory(&textureDesc, sizeof(D3D11_TEXTURE2D_DESC));
+	textureDesc.Width = WIDTH;
+	textureDesc.Height = HEIGHT;
+	textureDesc.MipLevels = 1;
+	textureDesc.ArraySize = 1;
+	textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	textureDesc.SampleDesc.Count = 1;
+	textureDesc.Usage = D3D11_USAGE_DEFAULT;
+	textureDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+	textureDesc.CPUAccessFlags = 0;
+	textureDesc.MiscFlags = 0;
+
+	HRESULT hr = this->device_ptr->CreateTexture2D(&textureDesc, NULL, &noGlowTexture);
+	assert(SUCCEEDED(hr) && "Texture failed!");
+
+	D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc;
+	ZeroMemory(&renderTargetViewDesc, sizeof(D3D11_RENDER_TARGET_VIEW_DESC));
+	renderTargetViewDesc.Format = textureDesc.Format;
+	renderTargetViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+	renderTargetViewDesc.Texture2D.MipSlice = 0;
+
+	hr = this->device_ptr->CreateRenderTargetView(noGlowTexture, &renderTargetViewDesc, &noGlowRTV);
+	assert(SUCCEEDED(hr) && "RTV failed!");
+
+	D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
+	ZeroMemory(&shaderResourceViewDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
+	shaderResourceViewDesc.Format = textureDesc.Format;
+	shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	shaderResourceViewDesc.Texture2D.MostDetailedMip = 0;
+	shaderResourceViewDesc.Texture2D.MipLevels = 1;
+
+	//0 so that it uses textures desc
+	hr = this->device_ptr->CreateShaderResourceView(noGlowTexture, &shaderResourceViewDesc, &this->noGlowSRV);
+	assert(SUCCEEDED(hr) && "SRV failed!");
+}
+
 Window::Window(HINSTANCE hInstance, PWSTR pCmdLine, int nCmdShow)
 {
 	// Register the window class.
@@ -146,6 +211,101 @@ Window::Window(HINSTANCE hInstance, PWSTR pCmdLine, int nCmdShow)
 	this->_createSwapChain();
 	this->_createDepthBuffer();
 	this->_createDepthState();
+	this->_createRSCullNone();
+
+	//Glow
+	_createNoGlowTexture();
+	this->glowShader = new Shader(L"glowVS.hlsl", L"glowPS.hlsl", device_ptr);
+
+	D3D11_SAMPLER_DESC samplerStateDesc;
+	samplerStateDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerStateDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerStateDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerStateDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerStateDesc.MinLOD = (-FLT_MAX);
+	samplerStateDesc.MaxLOD = (FLT_MAX);
+	samplerStateDesc.MipLODBias = 0.0f;
+	samplerStateDesc.MaxAnisotropy = 1;
+	samplerStateDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	samplerStateDesc.BorderColor[0] = 1.f;
+	samplerStateDesc.BorderColor[1] = 1.f;
+	samplerStateDesc.BorderColor[2] = 1.f;
+	samplerStateDesc.BorderColor[3] = 1.f;
+
+	HRESULT hr = device_ptr->CreateSamplerState(&samplerStateDesc, &this->samplerState);
+	assert(SUCCEEDED(hr));
+
+
+	//Using this to remove alpha blending
+	D3D11_BLEND_DESC blendState;
+	ZeroMemory(&blendState, sizeof(D3D11_BLEND_DESC));
+	blendState.RenderTarget[0].BlendEnable = FALSE;
+	blendState.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	device_ptr->CreateBlendState(&blendState, &this->blendState);
+
+	//setting states
+	device_context_ptr->PSSetSamplers(0, 1, &this->samplerState);
+
+	float blend[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	UINT sampleMask = 0xffffffff;
+
+	device_context_ptr->OMSetBlendState(this->blendState, blend, sampleMask);
+
+	//Quad
+	UINT vertex_stride = sizeof(VertexData);
+	UINT vertex_offset = 0;
+	UINT vertex_count = 6;
+
+	std::vector<VertexData> vertices = 
+	{
+		{
+			-1.f,  1.f, 0.f,
+			0.f, 0.f,
+			0.f, 0.f, 0.f
+		},
+		{
+			1.f, -1.f, 0.f,
+			1.f, 1.f,
+			0.f, 0.f, 0.f
+		},
+		{
+			-1.f, -1.f, 0.f,
+			0.f, 1.f,
+			0.f, 0.f, 0.f
+		},
+		{
+			-1.f,  1.f, 0.f,
+			0.f, 0.f,
+			0.f, 0.f, 0.f
+		},
+		{
+			1.f,  1.f, 0.f,
+			1.f, 0.f,
+			0.f, 0.f, 0.f
+		},
+		{
+			1.f, -1.f, 0.f,
+			1.f, 1.f,
+			0.f, 0.f, 0.f
+		}
+	};
+	
+
+	D3D11_BUFFER_DESC vertex_buff_descr = {};
+	vertex_buff_descr.ByteWidth = vertex_stride * vertex_count;
+	vertex_buff_descr.Usage = D3D11_USAGE_DEFAULT;
+	vertex_buff_descr.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+
+	D3D11_SUBRESOURCE_DATA sr_data = { 0 };
+	sr_data.pSysMem = vertices.data();
+
+	HRESULT hrCreateVBuffer = device_ptr->CreateBuffer(
+		&vertex_buff_descr,
+		&sr_data,
+		&quadVertBuffer
+	);
+
+	assert(SUCCEEDED(hrCreateVBuffer));
 
 	RECT winRect;
 	GetClientRect(this->hwnd, &winRect);
@@ -156,8 +316,8 @@ Window::Window(HINSTANCE hInstance, PWSTR pCmdLine, int nCmdShow)
 	this->viewport = new D3D11_VIEWPORT{
 		0.0f,
 		0.0f,
-		(FLOAT)(winRect.right - winRect.left),
-		(FLOAT)(winRect.bottom - winRect.top),
+		(FLOAT)(WIDTH - winRect.left),
+		(FLOAT)(HEIGHT - winRect.top),
 		0.0f,
 		1.0f
 	};
@@ -183,6 +343,36 @@ Window::~Window()
 	this->DSLessEqual->Release();
 	this->RSCullNone->Release();
 
+	//Glow
+	this->noGlowRTV->Release();
+	this->noGlowSRV->Release();
+
+	this->samplerState->Release();
+	this->blendState->Release();
+}
+
+void Window::glowPass()
+{	
+	UINT vertex_stride = sizeof(VertexData);
+	UINT vertex_offset = 0;
+	UINT vertex_count = 6;
+
+	//Null since we don't need depth to create glow, it's drawn on a quad on the screen. NDC-space/clip-space, 2D, -1 to 1
+	device_context_ptr->OMSetRenderTargets(1, &render_target_view_ptr, NULL);
+	device_context_ptr->PSSetShaderResources(0, 1, &noGlowSRV);
+
+	//Set shaders (ps, vs)
+	glowShader->useShader(device_context_ptr);
+
+	//Render quad
+	device_context_ptr->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	device_context_ptr->IASetInputLayout(glowShader->getInputLayoutPtr());
+	device_context_ptr->IASetVertexBuffers(0, 1, &quadVertBuffer, &vertex_stride, &vertex_offset);
+	
+	device_context_ptr->Draw(vertex_count, 0);
+	//Unbinding noGlow from shaderResource so it doesn't interfer with itself
+	ID3D11ShaderResourceView* nullPtrSRV = nullptr;
+	device_context_ptr->PSSetShaderResources(0, 1, &nullPtrSRV);
 }
 
 void Window::clearDepthStencil()

@@ -198,7 +198,7 @@ Plane::Plane(float x, float y, float z, LPCWSTR texturePath, LPCWSTR normalPath,
 	
 	setMaterialBuffer();
 	
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < vertices.size(); i++)
 	{
 		//Copy vertices
 		vertex_data_array[i].pX = vertices[i].x;
@@ -221,7 +221,7 @@ Plane::Plane(float x, float y, float z, LPCWSTR texturePath, LPCWSTR normalPath,
 
 	vertex_stride = sizeof(VertexDataNormalMap);
 	vertex_offset = 0;
-	vertex_count = sizeof(vertex_data_array);
+	vertex_count = vertices.size();
 
 	D3D11_BUFFER_DESC vertex_buff_descr = {};
 	vertex_buff_descr.ByteWidth = sizeof(vertex_data_array);

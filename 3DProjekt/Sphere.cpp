@@ -33,7 +33,7 @@ Sphere::Sphere(float x, float y, float z, LPCWSTR texturePath, Camera* camera, I
 	//Fix this to get size from vertices later
 	VertexData vertex_data_array[2280];
 	//std::vector<VertexData> vertex_data_array(2280);
-	for (int i = 0; i < 2280; i++)
+	for (int i = 0; i < vertices.size(); i++)
 	{
 		//Copy vertices
 		vertex_data_array[i].pX = vertices[i].x;
@@ -53,7 +53,7 @@ Sphere::Sphere(float x, float y, float z, LPCWSTR texturePath, Camera* camera, I
 
 	vertex_stride = sizeof(VertexData);
 	vertex_offset = 0;
-	vertex_count = sizeof(vertex_data_array);
+	vertex_count = vertices.size();
 
 	D3D11_BUFFER_DESC vertex_buff_descr = {};
 	vertex_buff_descr.ByteWidth = sizeof(vertex_data_array);

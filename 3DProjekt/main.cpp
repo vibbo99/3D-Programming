@@ -11,6 +11,7 @@
 #include "SkyBoxSphere.h"
 #include "mousePicking.h"
 #include "intersectionChecker.h"
+#include "Skybox.h"
 
 #include <fcntl.h>
 #include <io.h>
@@ -37,11 +38,19 @@ ID3D11Buffer* light_constant_buffer_ptr = NULL;
 ID3D11Buffer* lightNr_constant_buffer_ptr = NULL;
 ID3D11Buffer* camera_pos_buffer = NULL;
 
+
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
 {
 	Window window(hInstance, pCmdLine, nCmdShow);
 	Camera camera;
 	XMFLOAT3 mousePos;
+
+	XMFLOAT3 cubePosition;
+
+	//Mouse
+	Mouse::ButtonStateTracker mouseCheck;
+	std::unique_ptr<DirectX::Mouse> mouse = std::make_unique<DirectX::Mouse>();
+	mouse->SetWindow(window.getHwind());
 
 	//Plane intersection variables
 	int nrOfPlanes = 0;
@@ -69,7 +78,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 
 	//If you want to display console information
 
-	//RedirectIOToConsole();
+	RedirectIOToConsole();
 	
 	camera.setPosition(0, 0, 0);
 	camera.setupMouse(window.getHwind());
@@ -84,6 +93,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	/*Point_Light pl(XMFLOAT3(0.0f, 2.0f, 0.0f), window.getDevicePtr(), window.getDeviceContextPtr(), &camera);
 	pl.setScale(0.5, 0.5, 0.5);*/
 	Cube cube(4.0f, 0.0f, 4.0f, LPCWSTR(L"groundTexture.jpg"), &camera,  window.getDevicePtr(), window.getDeviceContextPtr());
+
+	Cube cubeWhite(4.0f, 0.0f, 4.0f, LPCWSTR(L"whiteTexture.jpg"), &camera, window.getDevicePtr(), window.getDeviceContextPtr());
+
+	Skybox skyBox(L"skymap.DDS", &camera, window.getDevicePtr(), window.getDeviceContextPtr());
 	
 
 	//SkyBoxCube skyBoxCube(0.0f, 0.0f , 0.0f, LPCWSTR(L"Skybox_test.jpg"), &camera, window.getDevicePtr(), window.getDeviceContextPtr());
@@ -95,20 +108,20 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 
 	//planeObjects[0].rotateX(XMConvertToRadians(-90));
 	
-	Sphere sphereObject(-4.0f, 0.0f, 4.0f, LPCWSTR(L"groundTexture.jpg"), &camera, window.getDevicePtr(), window.getDeviceContextPtr());
+	Sphere sphereObject(0.0f, 0.0f, 0.0f, LPCWSTR(L"groundTexture.jpg"), &camera, window.getDevicePtr(), window.getDeviceContextPtr());
 
-	sphereObjects[0] = Sphere(-4.0f, 0.0f, 4.0f, LPCWSTR(L"groundTexture.jpg"), &camera, window.getDevicePtr(), window.getDeviceContextPtr());
+	sphereObjects[0] = Sphere(0.0f, 0.0f, 0.0f, LPCWSTR(L"groundTexture.jpg"), &camera, window.getDevicePtr(), window.getDeviceContextPtr());
 
 	sphereCenter[nrOfSpheres] = sphereObjects[0].getCENTERXMVECTOR();
-	sphereRadius[nrOfSpheres] = 0.5f;
+	sphereRadius[nrOfSpheres] = 0.005f;
 
 	nrOfSpheres++;
 
 
+	//Viktors inverterade sphere
+	//SkyBoxSphere SkySphere(0.0f, 0.0f, 0.0f, LPCWSTR(L"skymap.dds"), &camera, window.getDevicePtr(), window.getDeviceContextPtr());
 
-	SkyBoxSphere SkySphere(0.0f, 0.0f, 0.0f, LPCWSTR(L"skymap.dds"), &camera, window.getDevicePtr(), window.getDeviceContextPtr());
-
-	Point_Light* plArr[4];
+	Point_Light* plArr[5];
 	plArr[0] = new Point_Light(XMFLOAT3(4.0f, 1.5f, 2.0f), window.getDevicePtr(), window.getDeviceContextPtr(), &camera);
 	plArr[0]->setScale(0.5, 0.5, 0.5);
 	plArr[1] = new Point_Light(XMFLOAT3(0.0f, 25.0f, 25.0f), window.getDevicePtr(), window.getDeviceContextPtr(), &camera);
@@ -120,6 +133,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	plArr[3] = new Point_Light(XMFLOAT3(0.0f, 40.0f, 0.0f), window.getDevicePtr(), window.getDeviceContextPtr(), &camera);
 	plArr[3]->setScale(0.5, 0.5, 0.5);
 	plArr[3]->setAttenuation(1.0, 0.0014, 0.000007);
+	plArr[4] = new Point_Light(XMFLOAT3(2.f, 0.f, 0.f), window.getDevicePtr(), window.getDeviceContextPtr(), &camera);
+	plArr[4]->setScale(0.5, 0.5, 0.5);
+	plArr[4]->setDiffuse(XMFLOAT4(0.f, 1.f, 0.f, 1.f));
 	
 	bool quitWindow = false;
 	if ( window.getHwind() == NULL)
@@ -186,9 +202,33 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	//planeObject.scaleSize(10, 1, 10);
 	while (!quitWindow)
 	{
+		//set rasterizeState, lasts until change
 
+		//Mouse things
+		auto theMouse = mouse->GetState();
+		
 		camera.processKeyboard(0.5);
-		//camera.processMouse(0.5);
+
+
+		if (theMouse.positionMode == Mouse::MODE_RELATIVE)
+		{
+			camera.processMouse(theMouse.x, theMouse.y);				
+		}
+
+		if (theMouse.rightButton)
+		{
+			std::cout << "MOUSE CLICK" << std::endl;
+			//Last frame where is mousePos, how much movement since last frame
+			mouse->SetMode(Mouse::MODE_RELATIVE);
+		}
+
+		else
+		{
+			//For picking, example.
+			mouse->SetMode(Mouse::MODE_ABSOLUTE);
+		}
+		
+		
 
 		//Test mouse-picking
 
@@ -210,72 +250,58 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 		camData.SysMemPitch = 0;
 		camData.SysMemSlicePitch = 0;
 
-		mousePicker->update(&camera);
+
+		
+		//inserted mouse x & y
+		mousePicker->update(&camera, theMouse.x, theMouse.y);
 
 		mousePos = mousePicker->getRayDirFloat3();
 
-		//Rotate with mouse movement.
-		if (setCursorPosOnce <= 100)
+
+		///////INTERSECTION/////////
+		
+
+		mouseCheck.Update(theMouse);
+
+
+		if (mouseCheck.leftButton == Mouse::ButtonStateTracker::PRESSED)
 		{
-			SetCursorPos((int)WIDTH / 2, (int)HEIGHT / 2);
-			setCursorPosOnce++;
-		}
-		camera.processMouse(mousePicker->getMouseX(), mousePicker->getMouseY());
-
-		/*if (mousePicker->getMouseX() >= 1910)
-		{
-			//SetCursorPos(1915, mousePicker->getMouseY());
-		}
-		//else if (mousePicker->getMouseX() <= 10)
-		//{
-			//SetCursorPos(5, mousePicker->getMouseY());
-		//}*/
-
-		for (int i = 0; i < nrOfSpheres; i++)
-		{
-			lowestValue = intersectionCheck.collisionCheck(i, mousePicker->getRayPos(), planeDistance, mousePicker->getRayDir(), planeNormals, "Sphere", sphereCenter, sphereRadius);
-
-			//std::cout << std::to_string(mousePos.x) << ", " << std::to_string(mousePos.y) << ", " << std::to_string(mousePos.z) << std::endl;
-			
-
-			if (lowestValue >= 0)
+			if (intersectionCheck.cubeCheck(0.5f, cube.getPositionXMFLOAT3(), mousePicker->getRayPos(), mousePicker->getRayDir()))
 			{
-				std::cout << "Ray hit sphere" << std::endl;
-			
-				planeDelay--;
-				//sphereObjects[0].scaleSize(4.f, 4.f, 4.f);
-
-				if(planeDelay <= 0)
-				{ 
-					if (sphereObjects[0].getScale().m128_f32[0] >= 2.f)
-					{
-						sphereObjects[0].scaleSize(1.f, 1.f, 1.f);
-					}
-					else
-						sphereObjects[0].scaleSize(2.f, 2.f, 2.f);
-
-					//planeObjects[i].setPosition(-50.f, 0.f, 2.f);
-				}
+				//std::cout << "Hit" << std::endl;
+				cubePosition = cube.getPositionXMFLOAT3();
+				cube.setPosition(cubePosition.x , cubePosition.y , cubePosition.z + 0.1);
 			}
 			else
 			{
-				std::cout << "Not hit" << std::endl;
+				//std::cout << "Not hit" << std::endl;
 			}
 		}
 		
-		//if (mousePicker->getMouseX() > 1920)
+		//for (int i = 0; i < nrOfSpheres; i++)
 		//{
-		//	setCursorPosOnce = 0;
+		//	//lowestValue 
+		//	lowestValue = intersectionCheck.collisionCheck(i, mousePicker->getRayPos(), planeDistance, mousePicker->getRayDir(), planeNormals, "Sphere", sphereCenter, sphereRadius);
+
+		//	//std::cout << std::to_string(mousePos.x) << ", " << std::to_string(mousePos.y) << ", " << std::to_string(mousePos.z) << std::endl;
 		//	
+
+		//	if (lowestValue >= 0)
+		//	{
+		//		std::cout << "Ray hit sphere" << std::endl;
+		//	
+		//	
+		//	}
+		//	else
+		//	{
+		//		std::cout << "Not hit" << std::endl;
+		//	}
 		//}
-		////SetPhysicalCursorPos(700, 430);
-		//if (setCursorPosOnce == 0)
-		//{
-		//	SetCursorPos((int)WIDTH / 2, (int)HEIGHT / 2);
-		//	setCursorPosOnce = 1;
-		//}
+		////////////////////////////////////
+
+
+
 		
-		//SetCursorPos((int)WIDTH / 2, (int)HEIGHT / 2);
 		
 
 		HRESULT hr = window.getDevicePtr()->CreateBuffer(&camDesc, &camData, &camera_pos_buffer);
@@ -284,14 +310,20 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 			assert(FAILED(hr));
 		
 		window.getDeviceContextPtr()->ClearRenderTargetView(*window.getRenderTargetViewPtr(), background_colour);
+		window.getDeviceContextPtr()->ClearRenderTargetView(*window.getNoGlowRTV_ptr(), background_colour);
 		window.clearDepthStencil();
 		window.getDeviceContextPtr()->RSSetViewports(1, window.getViewportPtr());
-		window.getDeviceContextPtr()->OMSetRenderTargets(1, window.getRenderTargetViewPtr(), window.getDepthStencilViewPtr());
+		window.getDeviceContextPtr()->OMSetRenderTargets(1, window.getNoGlowRTV_ptr(), window.getDepthStencilViewPtr());
+		//window.getDeviceContextPtr()->RSSetState(window.getRSCullNone());
 		
 
 		
 		//Draw cube object
 		cube.draw(light_constant_buffer_ptr, lightNr_constant_buffer_ptr, camera_pos_buffer);
+
+
+		
+
 
 		//skyBoxCube.draw(light_constant_buffer_ptr, lightNr_constant_buffer_ptr, camera_pos_buffer);
 
@@ -308,13 +340,19 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 		
 		//Draw sphere
 		sphereObject.draw(light_constant_buffer_ptr, lightNr_constant_buffer_ptr, camera_pos_buffer);
-		SkySphere.draw(light_constant_buffer_ptr, lightNr_constant_buffer_ptr, camera_pos_buffer);
+
+		//Viktors inverterade sphere
+		//SkySphere.draw(light_constant_buffer_ptr, lightNr_constant_buffer_ptr, camera_pos_buffer);
 
 
 		//Draw point light
 		for (int i = 0; i < 4; i++) {
 			plArr[i]->draw();
 		}
+
+		skyBox.draw(nullptr, nullptr, camera_pos_buffer);
+
+		window.glowPass();
 
 		window.getSwapChainPtr()->Present(1, 0);
 		quitWindow = window.update();

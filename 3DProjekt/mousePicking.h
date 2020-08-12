@@ -29,16 +29,16 @@ private:
 	Camera* aCamera;
 
 	//Denna kan bara finnas på ett ställe. Så ska kameran kunna flyttas med hjälp av denna måste man hämta den härifrån.
-	std::unique_ptr<DirectX::Mouse> mouse = std::make_unique<DirectX::Mouse>();
+	
 	
 	
 public:
 
 	mousePicking();
 	mousePicking(Camera *aCamera);
-	void processMouse();
+	void processMouse(float x, float y);
 
-	void update(Camera *aCamera);
+	void update(Camera *aCamera, float x, float y);
 
 	void mouseToCoords(float x, float y);
 

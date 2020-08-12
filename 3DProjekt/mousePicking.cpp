@@ -13,17 +13,16 @@ mousePicking::mousePicking(Camera *aCamera)
 	this->aspectRatio = WIDTH / HEIGHT;
 }
 
-void mousePicking::processMouse()
+void mousePicking::processMouse(float x, float y)
 {
-		auto theMouse = mouse->GetState();
-		mouse->SetVisible(true);
+		
 	
 		//SetCursorPos(700, 430);
 		//mouse->SetVisible(true);
-		this->mouseX = theMouse.x;
-		this->mouseY = theMouse.y;
+		this->mouseX = x;
+		this->mouseY = y;
 
-		auto leftClickCheck = mouse->GetState().leftButton;
+		//auto leftClickCheck = mouse->GetState().leftButton;
 		
 		//if (leftClickCheck == pressed)
 		//{
@@ -33,11 +32,11 @@ void mousePicking::processMouse()
 		 
 }
 
-void mousePicking::update(Camera* aCamera)
+void mousePicking::update(Camera* aCamera, float x, float y)
 {
 	this->view = this->aCamera->getViewMatrix();
 	
-	processMouse();
+	processMouse(x, y);
 }
 
 
@@ -48,15 +47,16 @@ void mousePicking::mouseToCoords(float x, float y)
 	float projX = 1 / (aspectRatio * tan(this->aCamera->getFieldOfView() / 2));
 	float projY = 1 / tan(this->aCamera->getFieldOfView() / 2);
 
-	viewSpace.m128_f32[0] = (x * 2.f) / WIDTH - 1 / projX;
-	viewSpace.m128_f32[1] = -(y * 2.f) / HEIGHT + 1 / projY;
+	viewSpace.m128_f32[0] = (2.f * x / WIDTH - 1) / projX;
+	viewSpace.m128_f32[1] = (-2.f * y / HEIGHT + 1) / projY;
 	viewSpace.m128_f32[2] = 1.f;
+
+
 
 	XMVECTOR pos = XMVectorSet(0.f, 0.f, 0.f, 1.f);
 	XMVECTOR dir = XMVectorSet(viewSpace.m128_f32[0], viewSpace.m128_f32[1], viewSpace.m128_f32[2], 1.0f);
 
 	//To world space
-
 	
 	this->viewInverse = XMMatrixInverse(&XMMatrixDeterminant(this->view), this->view);
 
@@ -66,6 +66,8 @@ void mousePicking::mouseToCoords(float x, float y)
 	this->world = dir;
 	this->rayPos = pos;
 }
+
+
 
 XMVECTOR mousePicking::getRayDir()
 {

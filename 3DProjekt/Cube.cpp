@@ -68,7 +68,7 @@ Cube::Cube(float x, float y, float z, LPCWSTR texturePath, Camera* camera,
 
 	vertex_stride = sizeof(VertexData);
 	vertex_offset = 0;
-	vertex_count = sizeof(vertex_data_array);
+	vertex_count = vertices.size();
 
 	D3D11_BUFFER_DESC vertex_buff_descr = {};
 	vertex_buff_descr.ByteWidth = sizeof(vertex_data_array);

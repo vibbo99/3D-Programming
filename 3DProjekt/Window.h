@@ -1,5 +1,6 @@
 #pragma once
 #include "Header.h"
+#include "Shader.h"
 
 class Window
 {
@@ -11,6 +12,18 @@ private:
 	IDXGISwapChain* swap_chain_ptr = NULL;
 	ID3D11RenderTargetView* render_target_view_ptr = NULL;
 	ID3D11ShaderResourceView* shaderRV = NULL;
+
+	//Glow
+	ID3D11RenderTargetView* noGlowRTV = NULL;
+	ID3D11ShaderResourceView* noGlowSRV = NULL;
+
+	ID3D11Buffer* quadVertBuffer;
+
+	Shader* glowShader;
+
+	ID3D11SamplerState* samplerState;
+	ID3D11BlendState* blendState;
+
 
 	D3D11_VIEWPORT* viewport = NULL;
 
@@ -33,6 +46,9 @@ private:
 	void _createSwapChain();
 	void _createDepthBuffer();
 	void _createDepthState();
+	void _createRSCullNone();
+
+	void _createNoGlowTexture();
 public:
 	Window(HINSTANCE hInstance, PWSTR pCmdLine, int nCmdShow);
 	~Window();
@@ -46,6 +62,14 @@ public:
 	D3D11_VIEWPORT* getViewportPtr() { return this->viewport; }
 	ID3D11DepthStencilView* getDepthStencilViewPtr() { return this->pDepthStencilView; }
 
+	//noGlow Getters
+	ID3D11RenderTargetView* const* getNoGlowRTV_ptr() { return  &this->noGlowRTV; }
+	ID3D11ShaderResourceView* getNoGlowSRV_ptr() { return this->noGlowSRV; }
+
+	//Glow
+	void glowPass();
+
+
 	//SkyBox
 	ID3D11Buffer* getSphereIndexBuffer() { return this->sphereIndexBuffer; }
 	ID3D11Buffer* getSphereVertBuffer() { return this->sphereVertBuffer; }
@@ -57,7 +81,8 @@ public:
 	ID3D11DepthStencilState* getDSLessEqual() { return this->DSLessEqual; }
 	ID3D11RasterizerState* getRSCullNone() { return this->RSCullNone; }
 
-
+	
+	
 	//SETTERS
 
 
